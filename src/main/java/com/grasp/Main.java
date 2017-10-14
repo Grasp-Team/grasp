@@ -32,7 +32,7 @@ public class Main {
     SpringApplication.run(Main.class, args);
   }
 
-  @RequestMapping("/something/")
+  @RequestMapping("/something")
   String index() {
     return "index";
   }
