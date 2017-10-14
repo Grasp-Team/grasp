@@ -1,4 +1,4 @@
-package com.grasp.mainservice;
+package com.grasp;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.grasp.mainservice;
+package com.grasp;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
