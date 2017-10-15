@@ -16,14 +16,12 @@ public class Tutor {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    Long tutorId;
-
-    @Column(name = "uid")
+    private Long tutorId;
+    @JoinColumn(name = "uid")
     private UUID uid;
-
     @ManyToOne
     @JoinColumn(name = "course_id")
-    CourseCatalog courseCatalog;
+    private CourseCatalog courseCatalog;
 
     public Tutor() {
     }
