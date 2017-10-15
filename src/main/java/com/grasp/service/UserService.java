@@ -23,7 +23,7 @@ public class UserService {
 
     @RequestMapping("/email/{email}")
     public User getByName(@PathVariable("email") String email) {
-        return userDao.findUserByFirstName(email);
+        return userDao.findUserByEmail(email);
     }
 
     @RequestMapping("/id/{id}")

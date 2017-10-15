@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface UserDao extends CrudRepository<User, UUID> {
     User findUserById(UUID id);
     User findUserByFirstName(String name);
+    User findUserByEmail(String name);
 }
