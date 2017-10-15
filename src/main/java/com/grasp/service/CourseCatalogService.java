@@ -1,17 +1,16 @@
 package com.grasp.service;
 
-
 import com.grasp.dao.CourseCatalogDao;
 import com.grasp.model.CourseCatalog;
+import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("/courseCatalog")
+@Service
 public class CourseCatalogService {
 
     private CourseCatalogDao courseCatalogDao;
@@ -21,19 +20,30 @@ public class CourseCatalogService {
         this.courseCatalogDao = courseCatalogDao;
     }
 
-    @RequestMapping("/")
+    // TODO: error handling
+
     public List<CourseCatalog> getAllCourses() {
-        return (List<CourseCatalog>) courseCatalogDao.findAll();
+
+        List<CourseCatalog> courseCatalogs = (List<CourseCatalog>) courseCatalogDao.findAll();
+
+        if(CollectionHelper.isEmpty(courseCatalogs)) {
+            return new ArrayList<>();
+        }
+
+        return courseCatalogs;
     }
 
-    @RequestMapping("/code/{code}")
     public CourseCatalog getCourseByCode(@PathVariable("code") String code) {
         return courseCatalogDao.findByCode(code);
     }
 
-    @RequestMapping("/subject/{subject}")
     public List<CourseCatalog> getCoursesBySubject(@PathVariable("subject") String subject) {
-        return courseCatalogDao.findAllBySubject(subject);
-    }
+        List<CourseCatalog> courseCatalogs = (List<CourseCatalog>) courseCatalogDao.findAllBySubject(subject);
 
+        if(CollectionHelper.isEmpty(courseCatalogs)) {
+            return new ArrayList<>();
+        }
+
+        return courseCatalogs;
+    }
 }

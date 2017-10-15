@@ -1,16 +1,15 @@
 package com.grasp.service;
 
-
 import com.grasp.dao.TutorDao;
 import com.grasp.model.Tutor;
+import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("/tutor")
+@Service
 public class TutorService {
 
     private TutorDao tutorDao;
@@ -20,9 +19,15 @@ public class TutorService {
         this.tutorDao = tutorDao;
     }
 
-    @RequestMapping("/")
     public List<Tutor> getAllTutors() {
-        return (List<Tutor>) tutorDao.findAll();
+
+        List<Tutor> tutors = (List<Tutor>) tutorDao.findAll();
+
+        if(CollectionHelper.isEmpty(tutors)) {
+            return new ArrayList<>();
+        }
+
+        return tutors;
     }
 
 }

@@ -2,16 +2,16 @@ package com.grasp.service;
 
 import com.grasp.dao.UserDao;
 import com.grasp.model.User;
+import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/user")
+@Service
 public class UserService {
 
     private UserDao userDao;
@@ -21,19 +21,23 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    @RequestMapping("/email/{email}")
     public User getByName(@PathVariable("email") String email) {
         return userDao.findUserByEmail(email);
     }
 
-    @RequestMapping("/id/{id}")
     public User getById(@PathVariable("id") UUID uid) {
         return userDao.findUserById(uid);
     }
 
-    @RequestMapping("/")
     public List<User> getAllUsers() {
-        return (List<User>) userDao.findAll();
+
+        List<User> users = (List<User>) userDao.findAll();
+
+        if(CollectionHelper.isEmpty(users)) {
+            return new ArrayList<>();
+        }
+
+        return users;
     }
 
 }

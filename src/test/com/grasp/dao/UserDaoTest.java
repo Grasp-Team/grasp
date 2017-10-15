@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,42 +21,42 @@ import java.util.List;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource("classpath:application-integration.properties")
 public class UserDaoTest {
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private CourseCatalogDao courseCatalogDao;
-
-    @Test
-    public void test() throws Exception {
-        User user = new User("Jacob2", "Moore", "some Email..", 4, "se", "vpadmin");
-
-        userDao.save(user);
-
-        user = userDao.findUserByFirstName("Jacob2");
-
-        CourseCatalog courseCatalog = new CourseCatalog();
-
-        courseCatalogDao.save(courseCatalog);
-
-        List<Tutor> tutors = new ArrayList<>();
-
-        Tutor tutor = new Tutor(user.getId(), courseCatalog);
-
-        tutors.add(tutor);
-
-        user.setTutors(tutors);
-
-        userDao.save(user);
-
-        System.out.println(userDao.findUserById(user.getId()).toString());
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    }
+//
+//    @Autowired
+//    private UserDao userDao;
+//
+//    @Autowired
+//    private CourseCatalogService courseCatalogDao;
+//
+//    @Test
+//    public void test() throws Exception {
+//        User user = new User("Jacob2", "Moore", "some Email..", 4, "se", "vpadmin");
+//
+//        userDao.save(user);
+//
+//        user = userDao.findUserByFirstName("Jacob2");
+//
+//        CourseCatalog courseCatalog = new CourseCatalog();
+//
+//        courseCatalogDao.save(courseCatalog);
+//
+//        List<Tutor> tutors = new ArrayList<>();
+//
+//        Tutor tutor = new Tutor(user.getId(), courseCatalog);
+//
+//        tutors.add(tutor);
+//
+//        user.setTutors(tutors);
+//
+//        userDao.save(user);
+//
+//        System.out.println(userDao.findUserById(user.getId()).toString());
+//    }
 }
