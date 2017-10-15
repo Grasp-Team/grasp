@@ -10,18 +10,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TutorService {
 
     private TutorDao tutorDao;
-    private UserDao userDao;
 
     @Autowired
-    public TutorService(TutorDao tutorDao, UserDao userDao) {
+    public TutorService(TutorDao tutorDao) {
         this.tutorDao = tutorDao;
-        this.userDao = userDao;
     }
 
     public List<Tutor> getAllTutors() {
@@ -35,9 +32,5 @@ public class TutorService {
         return tutors;
     }
 
-    //TODO: probably want to move this elsewhere
-    public List<User> getAllTutorsWithUser() {
-        return userDao.findAllByIdIn(getAllTutors().stream().map(Tutor::getUid).collect(Collectors.toList()));
-    }
 
 }

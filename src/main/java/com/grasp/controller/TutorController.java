@@ -27,10 +27,4 @@ public class TutorController {
     public ResponseEntity<List<Tutor>> getAllTutors() {
         return new ResponseEntity<>(tutorService.getAllTutors(), HttpStatus.OK);
     }
-
-    @RequestMapping("/user")
-    public ResponseEntity<List<User>> getAllTutorsWithUser() {
-        return new ResponseEntity<>(tutorService.getAllTutorsWithUser(), HttpStatus.OK);
-    }
-
 }

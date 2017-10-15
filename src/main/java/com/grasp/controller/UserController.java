@@ -51,4 +51,9 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @RequestMapping("/tutor")
+    public ResponseEntity<List<User>> getAllTutorsWithUser() {
+        return new ResponseEntity<>(userService.getTutors(), HttpStatus.OK);
+    }
+
 }
