@@ -1,11 +1,21 @@
-﻿
+﻿CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+DROP SCHEMA IF EXISTS course CASCADE;
 CREATE SCHEMA course;
 
-CREATE TABLE course.courseCatalog (
-	courseName text PRIMARY KEY
-	-- fill in other information
+CREATE TABLE course.course_catalog (
+  id integer PRIMARY KEY,
+  code text NOT NULL UNIQUE,
+  subject text NOT NULL,
+  catalog_number integer NOT NULL,
+  course_name text,
+  description text,
+  academic_level text,
+  calendar_year integer,
+  url text
 );
 
+DROP SCHEMA IF EXISTS users CASCADE;
 CREATE SCHEMA users;
 
 CREATE TABLE users.users (
@@ -18,10 +28,11 @@ CREATE TABLE users.users (
 	faculty text
 );
 
-CREATE TABLE users.roles (
-	id uuid PRIMARY KEY,
-	course text REFERENCES course.courseCatalog (courseName)
-	--other information
+CREATE TABLE users.tutors (
+	id SERIAL PRIMARY KEY,
+	uid uuid REFERENCES users.users (id),
+	course_id integer REFERENCES course.course_catalog (id),
+  UNIQUE (uid, course_id)
 );
 
 CREATE TABLE users.relationships (
@@ -34,6 +45,6 @@ CREATE TABLE users.relationships (
 CREATE TABLE course.course (
 	id SERIAL PRIMARY KEY,
 	uid uuid REFERENCES users.users (id),
-	course text REFERENCES course.courseCatalog (courseName)
+	course_id integer REFERENCES course.course_catalog (id)
 );
 

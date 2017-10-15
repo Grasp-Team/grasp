@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Transactional
-public interface UserDao extends CrudRepository<User, UUID>{
+public interface UserDao extends CrudRepository<User, UUID> {
     User findUserById(UUID id);
     User findUserByFirstName(String name);
 }

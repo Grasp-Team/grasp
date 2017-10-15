@@ -2,9 +2,12 @@ package com.grasp.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -30,6 +33,9 @@ public class User {
     private String program;
     @Column(name = "faculty")
     private String faculty;
+    @JoinColumn(name = "uid")
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Tutor> tutors = new ArrayList<>();
 
     public User() {
     }
@@ -56,7 +62,8 @@ public class User {
         if (!lastName.equals(user.lastName)) return false;
         if (!email.equals(user.email)) return false;
         if (program != null ? !program.equals(user.program) : user.program != null) return false;
-        return faculty != null ? faculty.equals(user.faculty) : user.faculty == null;
+        if (faculty != null ? !faculty.equals(user.faculty) : user.faculty != null) return false;
+        return tutors.equals(user.tutors);
     }
 
     @Override
@@ -68,6 +75,7 @@ public class User {
         result = 31 * result + year;
         result = 31 * result + (program != null ? program.hashCode() : 0);
         result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
+        result = 31 * result + tutors.hashCode();
         return result;
     }
 
@@ -81,6 +89,7 @@ public class User {
                 ", year=" + year +
                 ", program='" + program + '\'' +
                 ", faculty='" + faculty + '\'' +
+                ", tutors=" + tutors +
                 '}';
     }
 }

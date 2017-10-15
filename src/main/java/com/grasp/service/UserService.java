@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserService {
 
     private UserDao userDao;
@@ -19,14 +21,19 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    @RequestMapping("/create")
-    public void create() {
-        User user = new User("Jacob", "Moore", "some Email", 4, "se", "vpadmin");
-        userDao.save(user);
+    @RequestMapping("/email/{email}")
+    public User getByName(@PathVariable("email") String email) {
+        return userDao.findUserByFirstName(email);
     }
 
-    @RequestMapping("/name/{name}")
-    public String getByName(@PathVariable("name") String name) {
-        return userDao.findUserByFirstName(name).toString();
+    @RequestMapping("/id/{id}")
+    public User getById(@PathVariable("id") UUID uid) {
+        return userDao.findUserById(uid);
     }
+
+    @RequestMapping("/")
+    public List<User> getAllUsers() {
+        return (List<User>) userDao.findAll();
+    }
+
 }
