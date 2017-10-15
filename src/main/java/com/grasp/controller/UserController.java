@@ -3,6 +3,8 @@ package com.grasp.controller;
 import com.grasp.model.User;
 import com.grasp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +24,31 @@ public class UserController {
     }
 
     @RequestMapping("/email/{email}")
-    public User getByName(@PathVariable("email") String email) {
-        return userService.getByName(email);
+    public ResponseEntity<User> getByName(@PathVariable("email") String email) {
+        User user = userService.getByEmail(email);
+
+        if(user == null) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping("/id/{id}")
-    public User getById(@PathVariable("id") UUID uid) {
-        return userService.getById(uid);
+    public ResponseEntity<User> getById(@PathVariable("id") UUID uid) {
+
+        User user = userService.getById(uid);
+
+        if(user == null) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping("/")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @RequestMapping()
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
 }

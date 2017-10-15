@@ -33,12 +33,12 @@ public class CourseCatalogService {
         return courseCatalogs;
     }
 
-    public CourseCatalog getCourseByCode(@PathVariable("code") String code) {
+    public CourseCatalog getCourseByCode(String code) {
         return courseCatalogDao.findByCode(code);
     }
 
-    public List<CourseCatalog> getCoursesBySubject(@PathVariable("subject") String subject) {
-        List<CourseCatalog> courseCatalogs = (List<CourseCatalog>) courseCatalogDao.findAllBySubject(subject);
+    public List<CourseCatalog> getCoursesBySubject(String subject) {
+        List<CourseCatalog> courseCatalogs = courseCatalogDao.findAllBySubject(subject);
 
         if(CollectionHelper.isEmpty(courseCatalogs)) {
             return new ArrayList<>();

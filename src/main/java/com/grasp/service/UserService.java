@@ -5,7 +5,6 @@ import com.grasp.model.User;
 import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,11 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public User getByName(@PathVariable("email") String email) {
+    public User getByEmail(String email) {
         return userDao.findUserByEmail(email);
     }
 
-    public User getById(@PathVariable("id") UUID uid) {
+    public User getById(UUID uid) {
         return userDao.findUserById(uid);
     }
 

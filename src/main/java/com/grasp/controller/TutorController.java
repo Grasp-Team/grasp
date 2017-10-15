@@ -4,6 +4,8 @@ package com.grasp.controller;
 import com.grasp.model.Tutor;
 import com.grasp.service.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +23,8 @@ public class TutorController {
     }
 
     @RequestMapping()
-    public List<Tutor> getAllTutors() {
-        return tutorService.getAllTutors();
+    public ResponseEntity<List<Tutor>> getAllTutors() {
+        return new ResponseEntity<>(tutorService.getAllTutors(), HttpStatus.OK);
     }
 
 }
