@@ -1,7 +1,6 @@
 package com.grasp.controller;
 
 
-import com.grasp.model.Tutor;
 import com.grasp.model.User;
 import com.grasp.service.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;

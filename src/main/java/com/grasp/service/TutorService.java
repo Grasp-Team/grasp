@@ -29,7 +29,6 @@ public class TutorService {
             return new ArrayList<>();
         }
 
-        //TODO: Figure out better way to serialize tutors
         return tutors.stream().map(Tutor::getUid).collect(Collectors.toList());
     }
 

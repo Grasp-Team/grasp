@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Getter
 @Setter
 @Entity
@@ -32,4 +33,5 @@ public class Tutor {
         this.uid = uid;
         this.courseCatalog = courseCatalog;
     }
+
 }

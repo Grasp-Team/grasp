@@ -39,6 +39,7 @@ public class User {
     private String faculty;
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
+    @JsonManagedReference
     private List<Tutor> tutors = new ArrayList<>();
 
     public User() {
