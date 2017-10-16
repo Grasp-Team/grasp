@@ -54,9 +54,11 @@ public class UserDaoTest {
 
         courseCatalogDao.save(courseCatalog);
 
+        courseCatalogDao.findByCode("MATH 123");
+
         List<Tutor> tutors = new ArrayList<>();
 
-        Tutor tutor = new Tutor(user.getId(), courseCatalog);
+        Tutor tutor = new Tutor(user, courseCatalog);
 
         tutors.add(tutor);
 

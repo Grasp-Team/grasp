@@ -1,7 +1,6 @@
 package com.grasp.service;
 
 import com.grasp.dao.TutorDao;
-import com.grasp.dao.UserDao;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
 import com.grasp.util.CollectionHelper;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TutorService {
@@ -21,7 +21,7 @@ public class TutorService {
         this.tutorDao = tutorDao;
     }
 
-    public List<Tutor> getAllTutors() {
+    public List<User> getAllTutors() {
 
         List<Tutor> tutors = (List<Tutor>) tutorDao.findAll();
 
@@ -29,7 +29,8 @@ public class TutorService {
             return new ArrayList<>();
         }
 
-        return tutors;
+        //TODO: Figure out better way to serialize tutors
+        return tutors.stream().map(Tutor::getUid).collect(Collectors.toList());
     }
 
 

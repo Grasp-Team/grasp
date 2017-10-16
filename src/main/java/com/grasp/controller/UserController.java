@@ -50,10 +50,4 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
-
-    @RequestMapping("/tutor")
-    public ResponseEntity<List<User>> getAllTutorsWithUser() {
-        return new ResponseEntity<>(userService.getTutors(), HttpStatus.OK);
-    }
-
 }

@@ -42,9 +42,4 @@ public class UserService {
 
         return users;
     }
-
-    public List<User> getTutors() {
-        return userDao.findAllByIdIn(tutorService.getAllTutors().stream().map(Tutor::getUid).collect(Collectors.toList()));
-    }
-
 }
