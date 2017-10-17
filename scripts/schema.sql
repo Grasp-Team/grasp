@@ -27,6 +27,7 @@ CREATE TABLE users.users (
 	last_name text NOT NULL,
 	email text NOT NULL UNIQUE,
 	year integer NOT NULL,
+	user_type text NOT NULL CHECK(user_type ='Standard' OR user_type = 'Tutor'),
 	program text,
 	faculty text
 );

@@ -1,6 +1,7 @@
 package com.grasp.service;
 
 import com.grasp.dao.TutorDao;
+import com.grasp.dao.UserDao;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
 import com.grasp.util.CollectionHelper;
@@ -9,27 +10,38 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TutorService {
 
     private TutorDao tutorDao;
+    private UserDao userDao;
 
     @Autowired
-    public TutorService(TutorDao tutorDao) {
+    public TutorService(TutorDao tutorDao, UserDao userDao) {
         this.tutorDao = tutorDao;
+        this.userDao = userDao;
     }
 
-    public List<User> getAllTutors() {
-
+    public List<Tutor> getAllTutorEntries() {
         List<Tutor> tutors = (List<Tutor>) tutorDao.findAll();
 
         if(CollectionHelper.isEmpty(tutors)) {
             return new ArrayList<>();
         }
 
-        return tutors.stream().map(Tutor::getUid).collect(Collectors.toList());
+        return tutors;
+    }
+
+    public List<User> getAllTutors() {
+
+        List<User> tutors = userDao.findAllByUserType(User.UserType.Tutor);
+
+        if(CollectionHelper.isEmpty(tutors)) {
+            return new ArrayList<>();
+        }
+
+        return tutors;
     }
 
 

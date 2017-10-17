@@ -1,11 +1,11 @@
 package com.grasp.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @Getter
@@ -18,10 +18,8 @@ public class Tutor {
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long tutorId;
-    @JoinColumn(name = "uid")
-    @OneToOne
-    @JsonIgnore
-    private User uid;
+    @Column(name = "uid")
+    private UUID uid;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private CourseCatalog courseCatalog;
@@ -29,7 +27,7 @@ public class Tutor {
     public Tutor() {
     }
 
-    public Tutor(User uid, CourseCatalog courseCatalog) {
+    public Tutor(UUID uid, CourseCatalog courseCatalog) {
         this.uid = uid;
         this.courseCatalog = courseCatalog;
     }

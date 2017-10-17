@@ -1,12 +1,8 @@
 package com.grasp.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,6 +15,10 @@ import java.util.UUID;
 @Entity
 @Table(name="users", schema="users")
 public class User {
+
+    public enum UserType {
+        Standard, Tutor
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -37,6 +37,9 @@ public class User {
     private String program;
     @Column(name = "faculty")
     private String faculty;
+    @Column(name = "user_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserType userType = UserType.Standard;
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
     @JsonManagedReference
@@ -61,26 +64,28 @@ public class User {
 
         User user = (User) o;
 
-        if (year != user.year) return false;
-        if (!id.equals(user.id)) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        if (!email.equals(user.email)) return false;
-        if (program != null ? !program.equals(user.program) : user.program != null) return false;
-        if (faculty != null ? !faculty.equals(user.faculty) : user.faculty != null) return false;
-        return tutors.equals(user.tutors);
+        if (getYear() != user.getYear()) return false;
+        if (!getId().equals(user.getId())) return false;
+        if (!getFirstName().equals(user.getFirstName())) return false;
+        if (!getLastName().equals(user.getLastName())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (getProgram() != null ? !getProgram().equals(user.getProgram()) : user.getProgram() != null) return false;
+        if (getFaculty() != null ? !getFaculty().equals(user.getFaculty()) : user.getFaculty() != null) return false;
+        if (getUserType() != user.getUserType()) return false;
+        return getTutors() != null ? getTutors().equals(user.getTutors()) : user.getTutors() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + year;
-        result = 31 * result + (program != null ? program.hashCode() : 0);
-        result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
-        result = 31 * result + tutors.hashCode();
+        int result = getId().hashCode();
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getYear();
+        result = 31 * result + (getProgram() != null ? getProgram().hashCode() : 0);
+        result = 31 * result + (getFaculty() != null ? getFaculty().hashCode() : 0);
+        result = 31 * result + getUserType().hashCode();
+        result = 31 * result + (getTutors() != null ? getTutors().hashCode() : 0);
         return result;
     }
 
@@ -94,6 +99,7 @@ public class User {
                 ", year=" + year +
                 ", program='" + program + '\'' +
                 ", faculty='" + faculty + '\'' +
+                ", userType=" + userType +
                 ", tutors=" + tutors +
                 '}';
     }
