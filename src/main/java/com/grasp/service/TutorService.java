@@ -35,7 +35,7 @@ public class TutorService {
 
     public List<User> getAllTutors() {
 
-        List<User> tutors = userDao.findAllByUserType(User.UserType.Tutor);
+        List<User> tutors = userDao.findAllByUserType(User.UserType.TUTOR);
 
         if(CollectionHelper.isEmpty(tutors)) {
             return new ArrayList<>();

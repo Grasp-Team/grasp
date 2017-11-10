@@ -1,6 +1,7 @@
 package com.grasp.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grasp.security.model.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class User {
 
     public enum UserType {
-        Standard, Tutor
+        STANDARD, TUTOR
     }
 
     @Id
@@ -31,6 +32,8 @@ public class User {
     private String lastName;
     @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "password", nullable = false)
+    private String password;
     @Column(name = "year", nullable = false)
     private int year;
     @Column(name = "program")
@@ -39,7 +42,10 @@ public class User {
     private String faculty;
     @Column(name = "user_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType userType = UserType.Standard;
+    private UserType userType = UserType.STANDARD;
+    @Column(name = "user_role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.STANDARD;
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
     @JsonManagedReference

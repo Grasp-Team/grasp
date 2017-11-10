@@ -32,4 +32,23 @@ public class Tutor {
         this.courseCatalog = courseCatalog;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tutor)) return false;
+
+        Tutor tutor = (Tutor) o;
+
+        if (!getTutorId().equals(tutor.getTutorId())) return false;
+        if (getUid() != null ? !getUid().equals(tutor.getUid()) : tutor.getUid() != null) return false;
+        return getCourseCatalog().equals(tutor.getCourseCatalog());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTutorId().hashCode();
+        result = 31 * result + (getUid() != null ? getUid().hashCode() : 0);
+        result = 31 * result + getCourseCatalog().hashCode();
+        return result;
+    }
 }
