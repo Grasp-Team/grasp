@@ -54,7 +54,7 @@ public class UserDaoTest {
 
         List<Tutor> tutors = new ArrayList<>();
 
-        Tutor tutor = new Tutor(user, courseCatalog);
+        Tutor tutor = new Tutor(user.getId(), courseCatalog);
 
         tutors.add(tutor);
 

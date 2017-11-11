@@ -12,27 +12,27 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name="courseCatalog", schema="course")
+@Table(name = "courseCatalog", schema = "course")
 public class CourseCatalog {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Integer id;
-    @Column(name="code", nullable = false)
+    @Column(name = "code", nullable = false)
     private String code;
-    @Column(name="subject", nullable = false)
+    @Column(name = "subject", nullable = false)
     private String subject;
-    @Column(name="catalog_number", nullable = false)
+    @Column(name = "catalog_number", nullable = false)
     private Integer catalogNumber;
-    @Column(name="course_name")
+    @Column(name = "course_name")
     private String courseName;
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
-    @Column(name="academic_level")
+    @Column(name = "academic_level")
     private String academicLevel;
-    @Column(name="calendar_year")
+    @Column(name = "calendar_year")
     private Integer calendarYear;
-    @Column(name="url")
+    @Column(name = "url")
     private String url;
 
 
@@ -54,23 +54,42 @@ public class CourseCatalog {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CourseCatalog)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CourseCatalog)) {
+            return false;
+        }
 
         CourseCatalog that = (CourseCatalog) o;
 
-        if (!getId().equals(that.getId())) return false;
-        if (!getCode().equals(that.getCode())) return false;
-        if (!getSubject().equals(that.getSubject())) return false;
-        if (!getCatalogNumber().equals(that.getCatalogNumber())) return false;
-        if (getCourseName() != null ? !getCourseName().equals(that.getCourseName()) : that.getCourseName() != null)
+        if (!getId().equals(that.getId())) {
             return false;
-        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+        }
+        if (!getCode().equals(that.getCode())) {
             return false;
-        if (getAcademicLevel() != null ? !getAcademicLevel().equals(that.getAcademicLevel()) : that.getAcademicLevel() != null)
+        }
+        if (!getSubject().equals(that.getSubject())) {
             return false;
-        if (getCalendarYear() != null ? !getCalendarYear().equals(that.getCalendarYear()) : that.getCalendarYear() != null)
+        }
+        if (!getCatalogNumber().equals(that.getCatalogNumber())) {
             return false;
+        }
+        if (getCourseName() != null ? !getCourseName().equals(that.getCourseName()) : that.getCourseName() != null) {
+            return false;
+        }
+        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that
+                .getDescription() != null) {
+            return false;
+        }
+        if (getAcademicLevel() != null ? !getAcademicLevel().equals(that.getAcademicLevel()) : that
+                .getAcademicLevel() != null) {
+            return false;
+        }
+        if (getCalendarYear() != null ? !getCalendarYear().equals(that.getCalendarYear()) : that
+                .getCalendarYear() != null) {
+            return false;
+        }
         return getUrl() != null ? getUrl().equals(that.getUrl()) : that.getUrl() == null;
     }
 

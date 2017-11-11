@@ -50,14 +50,14 @@ public class JWT {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         JwtBuilder builder = Jwts.builder()
-                .setId(id)
-                .setIssuedAt(now)
-                .setSubject(subject)
-                .setIssuer(issuer)
-                .signWith(signatureAlgorithm, signingKey);
+                                 .setId(id)
+                                 .setIssuedAt(now)
+                                 .setSubject(subject)
+                                 .setIssuer(issuer)
+                                 .signWith(signatureAlgorithm, signingKey);
 
         // check if it's been specified
-        if(expiration >=0 ) {
+        if (expiration >= 0) {
             long expirationMillis = nowMillis + expiration;
             Date expirationDate = new Date(expirationMillis);
             builder.setExpiration(expirationDate);
@@ -69,8 +69,8 @@ public class JWT {
 
     public static Claims parseJwt(String jwt) {
         return Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(apiSecret))
-                .parseClaimsJwt(jwt)
-                .getBody();
+                   .setSigningKey(DatatypeConverter.parseBase64Binary(apiSecret))
+                   .parseClaimsJwt(jwt)
+                   .getBody();
     }
 }

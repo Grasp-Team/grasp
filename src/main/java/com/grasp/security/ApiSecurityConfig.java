@@ -28,14 +28,14 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/user/authenticate", "/user/signup").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers("/user/authenticate", "/user/signup").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean("apiAuthenticationEntryPoint")
-    public AuthenticationEntryPoint apiAuthenticaticationEntryPoint() throws Exception{
+    public AuthenticationEntryPoint apiAuthenticaticationEntryPoint() throws Exception {
         return new APIAuthenticaticationEntryPoint();
     }
 

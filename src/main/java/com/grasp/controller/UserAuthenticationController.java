@@ -41,7 +41,9 @@ public class UserAuthenticationController {
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<UserAuthenticationResponse> authentication(@RequestBody AuthenticationDTO authenticationDTO, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<UserAuthenticationResponse> authentication(@RequestBody AuthenticationDTO authenticationDTO,
+                                                                     HttpServletRequest request,
+                                                                     HttpServletResponse response) {
 
         UserAuthenticationResponse authenticationResponse = new UserAuthenticationResponse();
 
@@ -49,9 +51,9 @@ public class UserAuthenticationController {
 
             authenticationManager
 
-        } catch(InternalAuthenticationServiceException e) {
+        } catch (InternalAuthenticationServiceException e) {
 
-        } catch(AuthenticationException e){
+        } catch (AuthenticationException e) {
 
         }
 

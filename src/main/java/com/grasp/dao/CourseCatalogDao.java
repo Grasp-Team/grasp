@@ -9,5 +9,6 @@ import java.util.List;
 @Transactional
 public interface CourseCatalogDao extends CrudRepository<CourseCatalog, String> {
     CourseCatalog findByCode(String code);
+
     List<CourseCatalog> findAllBySubject(String subject);
 }
