@@ -26,7 +26,7 @@ public class TutorService {
     public List<Tutor> getAllTutorEntries() {
         List<Tutor> tutors = (List<Tutor>) tutorDao.findAll();
 
-        if(CollectionHelper.isEmpty(tutors)) {
+        if (CollectionHelper.isEmpty(tutors)) {
             return new ArrayList<>();
         }
 
@@ -37,7 +37,7 @@ public class TutorService {
 
         List<User> tutors = userDao.findAllByUserType(User.UserType.TUTOR);
 
-        if(CollectionHelper.isEmpty(tutors)) {
+        if (CollectionHelper.isEmpty(tutors)) {
             return new ArrayList<>();
         }
 

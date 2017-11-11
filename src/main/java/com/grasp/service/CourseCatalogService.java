@@ -25,7 +25,7 @@ public class CourseCatalogService {
 
         List<CourseCatalog> courseCatalogs = (List<CourseCatalog>) courseCatalogDao.findAll();
 
-        if(CollectionHelper.isEmpty(courseCatalogs)) {
+        if (CollectionHelper.isEmpty(courseCatalogs)) {
             return new ArrayList<>();
         }
 
@@ -39,7 +39,7 @@ public class CourseCatalogService {
     public List<CourseCatalog> getCoursesBySubject(String subject) {
         List<CourseCatalog> courseCatalogs = courseCatalogDao.findAllBySubject(subject);
 
-        if(CollectionHelper.isEmpty(courseCatalogs)) {
+        if (CollectionHelper.isEmpty(courseCatalogs)) {
             return new ArrayList<>();
         }
 

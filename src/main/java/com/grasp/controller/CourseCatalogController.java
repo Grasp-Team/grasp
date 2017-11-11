@@ -33,7 +33,7 @@ public class CourseCatalogController {
     public ResponseEntity<CourseCatalog> getCourseByCode(@PathVariable("code") String code) {
         CourseCatalog courseCatalog = courseCatalogService.getCourseByCode(code);
 
-        if(courseCatalog == null) {
+        if (courseCatalog == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -44,7 +44,7 @@ public class CourseCatalogController {
     public ResponseEntity<List<CourseCatalog>> getCoursesBySubject(@PathVariable("subject") String subject) {
         List<CourseCatalog> courseCatalogs = courseCatalogService.getCoursesBySubject(subject);
 
-        if(CollectionHelper.isEmpty(courseCatalogs)) {
+        if (CollectionHelper.isEmpty(courseCatalogs)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

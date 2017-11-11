@@ -20,7 +20,7 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
 
     @Override
     public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
-        if(containsContext(requestResponseHolder.getRequest())) {
+        if (containsContext(requestResponseHolder.getRequest())) {
             return (SecurityContext) getCache().get(extractToken(requestResponseHolder.getRequest()));
         }
 
@@ -31,10 +31,10 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
     public void saveContext(SecurityContext context, HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = context.getAuthentication();
 
-        if(authentication != null && authentication instanceof APIAuthenticationToken) {
+        if (authentication != null && authentication instanceof APIAuthenticationToken) {
             String token = (String) authentication.getDetails();
 
-            if(token != null) {
+            if (token != null) {
                 getCache().put(new Element(token, context));
             }
         }
@@ -50,6 +50,6 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
     }
 
     private String extractToken(HttpServletRequest request) {
-       return request.getHeader(API_TOKEN);
+        return request.getHeader(API_TOKEN);
     }
 }
