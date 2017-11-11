@@ -44,5 +44,20 @@ public class TutorService {
         return tutors;
     }
 
+    public List<User> getAllTutorsApplicableToCourse(String courseCode) {
+        List<Tutor> tutors = tutorDao.findTutorsByCourseCatalog_Code(courseCode);
+
+        if (CollectionHelper.isEmpty(tutors)) {
+            return new ArrayList<>();
+        }
+
+        List<User> users = new ArrayList<>();
+        for (Tutor tutor : tutors) {
+            User user = userDao.findUserById(tutor.getUid());
+            users.add(user);
+        }
+
+        return users;
+    }
 
 }
