@@ -7,8 +7,7 @@ DROP SCHEMA IF EXISTS course CASCADE;
 CREATE SCHEMA course;
 
 CREATE TABLE course.course_catalog (
-  id integer PRIMARY KEY,
-  code text NOT NULL UNIQUE,
+  code text PRIMARY KEY,
   subject text NOT NULL,
   catalog_number integer NOT NULL,
   course_name text,
