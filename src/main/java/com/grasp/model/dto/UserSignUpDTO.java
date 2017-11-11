@@ -1,7 +1,9 @@
 package com.grasp.model.dto;
 
+import com.grasp.model.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 @Getter
 @Setter
@@ -26,5 +28,13 @@ public class UserSignUpDTO {
         this.year = year;
         this.program = program;
         this.faculty = faculty;
+    }
+
+    public static User convertToEntity(UserSignUpDTO userDTO, ModelMapper modelMapper) {
+        return modelMapper.map(userDTO, User.class);
+    }
+
+    public static UserSignUpDTO convertToDTO(User user, ModelMapper modelMapper) {
+        return modelMapper.map(user, UserSignUpDTO.class);
     }
 }
