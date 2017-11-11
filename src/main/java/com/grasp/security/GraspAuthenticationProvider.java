@@ -21,14 +21,15 @@ public class GraspAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UserAuthenticationResponse response = userService.authenticate(new UserAuthenticationRequest(authentication.getName(), (String) authentication.getCredentials()));
+        UserAuthenticationResponse response = userService.authenticate(
+                new UserAuthenticationRequest(authentication.getName(), (String) authentication.getCredentials()));
 
         System.out.println("firstName: " + response.getFirstName());
         System.out.println("lastName: " + response.getLastName());
         System.out.println("role: " + response.getUserRole());
         System.out.println("userName: " + response.getUserName());
 
-        if(response.isAuthenticated()) {
+        if (response.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(new APIAuthenticationToken(response));
 
             return SecurityContextHolder.getContext().getAuthentication();

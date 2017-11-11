@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="users", schema="users")
+@Table(name = "users", schema = "users")
 public class User {
 
     public enum UserType {
@@ -65,19 +65,39 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
 
         User user = (User) o;
 
-        if (getYear() != user.getYear()) return false;
-        if (!getId().equals(user.getId())) return false;
-        if (!getFirstName().equals(user.getFirstName())) return false;
-        if (!getLastName().equals(user.getLastName())) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (getProgram() != null ? !getProgram().equals(user.getProgram()) : user.getProgram() != null) return false;
-        if (getFaculty() != null ? !getFaculty().equals(user.getFaculty()) : user.getFaculty() != null) return false;
-        if (getUserType() != user.getUserType()) return false;
+        if (getYear() != user.getYear()) {
+            return false;
+        }
+        if (!getId().equals(user.getId())) {
+            return false;
+        }
+        if (!getFirstName().equals(user.getFirstName())) {
+            return false;
+        }
+        if (!getLastName().equals(user.getLastName())) {
+            return false;
+        }
+        if (!getEmail().equals(user.getEmail())) {
+            return false;
+        }
+        if (getProgram() != null ? !getProgram().equals(user.getProgram()) : user.getProgram() != null) {
+            return false;
+        }
+        if (getFaculty() != null ? !getFaculty().equals(user.getFaculty()) : user.getFaculty() != null) {
+            return false;
+        }
+        if (getUserType() != user.getUserType()) {
+            return false;
+        }
         return getTutors() != null ? getTutors().equals(user.getTutors()) : user.getTutors() == null;
     }
 

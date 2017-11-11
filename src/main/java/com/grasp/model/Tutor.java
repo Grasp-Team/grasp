@@ -11,12 +11,12 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="tutors", schema="users")
+@Table(name = "tutors", schema = "users")
 public class Tutor {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tutorId;
     @Column(name = "uid")
     private UUID uid;
@@ -34,13 +34,21 @@ public class Tutor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Tutor)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Tutor)) {
+            return false;
+        }
 
         Tutor tutor = (Tutor) o;
 
-        if (!getTutorId().equals(tutor.getTutorId())) return false;
-        if (getUid() != null ? !getUid().equals(tutor.getUid()) : tutor.getUid() != null) return false;
+        if (!getTutorId().equals(tutor.getTutorId())) {
+            return false;
+        }
+        if (getUid() != null ? !getUid().equals(tutor.getUid()) : tutor.getUid() != null) {
+            return false;
+        }
         return getCourseCatalog().equals(tutor.getCourseCatalog());
     }
 

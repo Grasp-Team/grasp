@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
 
         List<User> users = (List<User>) userDao.findAll();
 
-        if(CollectionHelper.isEmpty(users)) {
+        if (CollectionHelper.isEmpty(users)) {
             return new ArrayList<>();
         }
 
@@ -61,11 +61,21 @@ public class UserService implements UserDetailsService {
         String faculty = updatedUser.getFaculty();
         int year = updatedUser.getYear();
 
-        if (firstName != null) originalUser.setFirstName(firstName);
-        if (lastName != null) originalUser.setLastName(lastName);
-        if (program != null) originalUser.setProgram(program);
-        if (faculty != null) originalUser.setFaculty(faculty);
-        if (year != 0) originalUser.setYear(year);
+        if (firstName != null) {
+            originalUser.setFirstName(firstName);
+        }
+        if (lastName != null) {
+            originalUser.setLastName(lastName);
+        }
+        if (program != null) {
+            originalUser.setProgram(program);
+        }
+        if (faculty != null) {
+            originalUser.setFaculty(faculty);
+        }
+        if (year != 0) {
+            originalUser.setYear(year);
+        }
 
     }
 
@@ -76,7 +86,9 @@ public class UserService implements UserDetailsService {
 
         // Check if user exists and return null otherwise
         User originalUser = getById(user.getId());
-        if (originalUser == null) return null;
+        if (originalUser == null) {
+            return null;
+        }
 
         // Update applicable fields
         updateUserFields(originalUser, user);
@@ -95,13 +107,15 @@ public class UserService implements UserDetailsService {
     public UserAuthenticationResponse authenticate(UserAuthenticationRequest userAuthenticationRequest) {
 
         User user = getByUserName(userAuthenticationRequest.getUserName());
-        UserAuthenticationResponse response = new UserAuthenticationResponse(user.getFirstName(), user.getLastName(), user.getUserRole(), user.getEmail());
+        UserAuthenticationResponse response = new UserAuthenticationResponse(user.getFirstName(), user.getLastName(),
+                user.getUserRole(), user.getEmail());
         response.setAuthenticated(true);
 
 
-        if(StringUtils.isEmpty(userAuthenticationRequest.getUserName())  || StringUtils.isEmpty(userAuthenticationRequest.getPassword())) {
+        if (StringUtils.isEmpty(userAuthenticationRequest.getUserName()) || StringUtils
+                .isEmpty(userAuthenticationRequest.getPassword())) {
             response.setAuthenticated(false);
-        } else if(!passwordEncoder.matches(userAuthenticationRequest.getPassword(), user.getPassword())) {
+        } else if (!passwordEncoder.matches(userAuthenticationRequest.getPassword(), user.getPassword())) {
             response.setAuthenticated(false);
         }
 

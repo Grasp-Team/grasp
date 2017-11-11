@@ -11,7 +11,10 @@ import java.util.UUID;
 @Transactional
 public interface UserDao extends CrudRepository<User, UUID> {
     User findUserById(UUID id);
+
     User findUserByFirstName(String name);
+
     User findUserByEmail(String name);
+
     List<User> findAllByUserType(User.UserType userType);
 }
