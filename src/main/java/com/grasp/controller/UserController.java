@@ -55,6 +55,19 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<User> updateUser(@RequestBody UserSignUpDTO userDTO) {
+
+        User user = userService.updateUser(convertToEntity(userDTO));
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<User> signUp(@RequestBody UserSignUpDTO userDTO) {
 

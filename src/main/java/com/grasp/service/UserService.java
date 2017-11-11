@@ -51,6 +51,40 @@ public class UserService implements UserDetailsService {
         return users;
     }
 
+    /*
+     * Updates one User object with the non-null fields of another User object
+     */
+    private void updateUserFields(User originalUser, User updatedUser) {
+        String firstName = updatedUser.getFirstName();
+        String lastName = updatedUser.getLastName();
+        String program = updatedUser.getProgram();
+        String faculty = updatedUser.getFaculty();
+        int year = updatedUser.getYear();
+
+        if (firstName != null) originalUser.setFirstName(firstName);
+        if (lastName != null) originalUser.setLastName(lastName);
+        if (program != null) originalUser.setProgram(program);
+        if (faculty != null) originalUser.setFaculty(faculty);
+        if (year != 0) originalUser.setYear(year);
+
+    }
+
+    /*
+     * Updates basic user information (i.e. name, program, faculty, etc...)
+     */
+    public User updateUser(User user) {
+
+        // Check if user exists and return null otherwise
+        User originalUser = getById(user.getId());
+        if (originalUser == null) return null;
+
+        // Update applicable fields
+        updateUserFields(originalUser, user);
+
+        // Save and return
+        return userDao.save(originalUser);
+    }
+
     public User signUp(User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
