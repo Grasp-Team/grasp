@@ -36,8 +36,8 @@ CREATE TABLE users.users (
 CREATE TABLE users.tutors (
 	id SERIAL PRIMARY KEY,
 	uid uuid REFERENCES users.users (id),
-	course_id integer REFERENCES course.course_catalog (id),
-  UNIQUE (uid, course_id)
+	course_code text REFERENCES course.course_catalog (code),
+  UNIQUE (uid, course_code)
 );
 
 CREATE TABLE users.relationships (
@@ -50,6 +50,6 @@ CREATE TABLE users.relationships (
 CREATE TABLE course.course (
 	id SERIAL PRIMARY KEY,
 	uid uuid REFERENCES users.users (id),
-	course_id integer REFERENCES course.course_catalog (id)
+	course_code text REFERENCES course.course_catalog (code)
 );
 
