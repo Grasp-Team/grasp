@@ -21,7 +21,7 @@ public class Tutor {
     @Column(name = "uid")
     private UUID uid;
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_code")
     private CourseCatalog courseCatalog;
 
     public Tutor() {
