@@ -23,16 +23,6 @@ public class TutorService {
         this.userDao = userDao;
     }
 
-    public List<Tutor> getAllTutorEntries() {
-        List<Tutor> tutors = (List<Tutor>) tutorDao.findAll();
-
-        if (CollectionHelper.isEmpty(tutors)) {
-            return new ArrayList<>();
-        }
-
-        return tutors;
-    }
-
     public List<User> getAllTutors() {
 
         List<User> tutors = userDao.findAllByUserType(User.UserType.TUTOR);
