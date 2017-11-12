@@ -19,26 +19,20 @@ public class UserRelationshipService {
         return userRelationshipDao.save(newRelationship);
     }
 
-    public UserRelationship updateExistingRelationship(UserRelationship updatedRelationship) {
+    public UserRelationship updateExistingRelationship(Long id, UserRelationship.Status status) {
 
-        UserRelationship originalRelationship = userRelationshipDao
-                .findUserRelationshipByUserIdAndTutorId(updatedRelationship.getUserId(),
-                        updatedRelationship.getTutorId());
+        UserRelationship existingRelationship = userRelationshipDao
+                .findUserRelationshipById(id);
 
-        if (originalRelationship == null) {
-            return null;
-        }
+        existingRelationship.setRelationshipStatus(status);
 
-        originalRelationship.setRelationshipStatus(updatedRelationship.getRelationshipStatus());
-
-        return userRelationshipDao.save(originalRelationship);
+        return userRelationshipDao.save(existingRelationship);
 
     }
 
-    public UserRelationship getRelationshipStatus(UserRelationship userRelationship) {
+    public UserRelationship getRelationship(UserRelationship userRelationship) {
         return userRelationshipDao
-                .findUserRelationshipByUserIdAndTutorId(userRelationship.getUserId(),
-                        userRelationship.getTutorId());
+                .findUserRelationshipById(userRelationship.getId());
     }
 
 

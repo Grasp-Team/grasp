@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class UserRelationshipDTO {
+    private Long id;
     private UUID tutorId;
     private UUID userId;
     private UserRelationship.Status relationshipStatus;
@@ -17,13 +18,15 @@ public class UserRelationshipDTO {
     public UserRelationshipDTO() {
     }
 
-    public UserRelationshipDTO(UUID tutorId, UUID userId) {
+    public UserRelationshipDTO(Long id, UUID tutorId, UUID userId) {
+        this.id = id;
         this.tutorId = tutorId;
         this.userId = userId;
         this.relationshipStatus = UserRelationship.Status.PENDING;
     }
 
-    public UserRelationshipDTO(UUID tutorId, UUID userId, UserRelationship.Status relationshipStatus) {
+    public UserRelationshipDTO(Long id, UUID tutorId, UUID userId, UserRelationship.Status relationshipStatus) {
+        this.id = id;
         this.tutorId = tutorId;
         this.userId = userId;
         this.relationshipStatus = relationshipStatus;
