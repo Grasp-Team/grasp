@@ -49,7 +49,6 @@ public class APIAuthenticationToken implements CredentialsContainer, Authenticat
         return this.principal;
     }
 
-    // TODO: do something better with this
     @Override
     public boolean isAuthenticated() {
         return true;

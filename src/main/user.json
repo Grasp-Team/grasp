@@ -1,0 +1,1 @@
+curl -XPOST -H "Content-Type: application/json" http://localhost:5000/user/signup '{"email" : "jaemoore@uwaterloo.ca", "password" : "password", "firstName" : "Jacob", "lastName" : "Moore", "year" : "4", "program" : "Software Engineering", "faculty" : "Math"}'
