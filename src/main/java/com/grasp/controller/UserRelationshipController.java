@@ -27,7 +27,8 @@ public class UserRelationshipController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<UserRelationshipDTO> createRelationship(@RequestBody UserRelationshipDTO userRelationshipDTO) {
+    public ResponseEntity<UserRelationshipDTO> createRelationship(
+            @RequestBody UserRelationshipDTO userRelationshipDTO) {
         UserRelationship newRelationship = relationshipService.addNewRelationship(entityConverter
                 .convertToEntity(userRelationshipDTO));
 
@@ -35,7 +36,8 @@ public class UserRelationshipController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<UserRelationshipDTO> updateRelationship(@RequestBody UserRelationshipDTO userRelationshipDTO) {
+    public ResponseEntity<UserRelationshipDTO> updateRelationship(
+            @RequestBody UserRelationshipDTO userRelationshipDTO) {
         UserRelationship relationship = relationshipService.updateExistingRelationship(entityConverter
                 .convertToEntity(userRelationshipDTO));
 
