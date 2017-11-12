@@ -16,9 +16,7 @@ import javax.persistence.Table;
 public class CourseCatalog {
 
     @Id
-    @Column(name = "id")
-    private Integer id;
-    @Column(name = "code", nullable = false)
+    @Column(name = "code")
     private String code;
     @Column(name = "subject", nullable = false)
     private String subject;
@@ -39,9 +37,8 @@ public class CourseCatalog {
     public CourseCatalog() {
     }
 
-    public CourseCatalog(Integer id, String code, String subject, Integer catalogNumber, String courseName,
+    public CourseCatalog(String code, String subject, Integer catalogNumber, String courseName,
                          String description, String academicLevel, Integer calendarYear, String url) {
-        this.id = id;
         this.code = code;
         this.subject = subject;
         this.catalogNumber = catalogNumber;
@@ -63,9 +60,6 @@ public class CourseCatalog {
 
         CourseCatalog that = (CourseCatalog) o;
 
-        if (!getId().equals(that.getId())) {
-            return false;
-        }
         if (!getCode().equals(that.getCode())) {
             return false;
         }
@@ -95,8 +89,7 @@ public class CourseCatalog {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getCode().hashCode();
+        int result = getCode().hashCode();
         result = 31 * result + getSubject().hashCode();
         result = 31 * result + getCatalogNumber().hashCode();
         result = 31 * result + (getCourseName() != null ? getCourseName().hashCode() : 0);
