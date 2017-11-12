@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private UserDao userDao;
     private TutorService tutorService;
@@ -107,6 +107,12 @@ public class UserService implements UserDetailsService {
     public UserAuthenticationResponse authenticate(UserAuthenticationRequest userAuthenticationRequest) {
 
         User user = getByUserName(userAuthenticationRequest.getUserName());
+
+        if(user == null) {
+            System.out.println(userAuthenticationRequest.getUserName() + "does not exist");
+            throw new RuntimeException();
+        }
+
         UserAuthenticationResponse response = new UserAuthenticationResponse(user.getFirstName(), user.getLastName(),
                 user.getUserRole(), user.getEmail());
         response.setAuthenticated(true);
@@ -120,15 +126,5 @@ public class UserService implements UserDetailsService {
         }
 
         return response;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-
-        // assume username is email
-        User user = getByUserName(userName);
-
-        return null; //new APIAuthenticationToken(user.getEmail(), user.getPassword(), new ArrayList<>());
-
     }
 }

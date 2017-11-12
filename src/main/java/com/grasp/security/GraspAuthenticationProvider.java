@@ -27,7 +27,7 @@ public class GraspAuthenticationProvider implements AuthenticationProvider {
         System.out.println("firstName: " + response.getFirstName());
         System.out.println("lastName: " + response.getLastName());
         System.out.println("role: " + response.getUserRole());
-        System.out.println("userName: " + response.getUserName());
+        System.out.println("username: " + response.getUserName());
 
         if (response.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(new APIAuthenticationToken(response));

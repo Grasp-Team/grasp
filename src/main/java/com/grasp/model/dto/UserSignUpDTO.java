@@ -29,12 +29,4 @@ public class UserSignUpDTO {
         this.program = program;
         this.faculty = faculty;
     }
-
-    public static User convertToEntity(UserSignUpDTO userDTO, ModelMapper modelMapper) {
-        return modelMapper.map(userDTO, User.class);
-    }
-
-    public static UserSignUpDTO convertToDTO(User user, ModelMapper modelMapper) {
-        return modelMapper.map(user, UserSignUpDTO.class);
-    }
 }

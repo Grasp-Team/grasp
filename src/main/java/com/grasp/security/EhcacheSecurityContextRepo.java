@@ -1,6 +1,8 @@
 package com.grasp.security;
 
+import com.grasp.security.jwt.JWT;
 import com.grasp.security.model.APIAuthenticationToken;
+import io.jsonwebtoken.Claims;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -12,6 +14,7 @@ import org.springframework.security.web.context.SecurityContextRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 public class EhcacheSecurityContextRepo implements SecurityContextRepository {
 
@@ -21,7 +24,10 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
     @Override
     public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
         if (containsContext(requestResponseHolder.getRequest())) {
-            return (SecurityContext) getCache().get(extractToken(requestResponseHolder.getRequest()));
+
+            String token = extractToken(requestResponseHolder.getRequest());
+
+            return (SecurityContext) getCache().get(token).getObjectValue();
         }
 
         return SecurityContextHolder.createEmptyContext();
@@ -34,7 +40,9 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
         if (authentication != null && authentication instanceof APIAuthenticationToken) {
             String token = (String) authentication.getDetails();
 
+
             if (token != null) {
+                System.out.println("Saving Token: " + token);
                 getCache().put(new Element(token, context));
             }
         }
