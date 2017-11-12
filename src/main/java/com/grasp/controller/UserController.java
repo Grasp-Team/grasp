@@ -1,6 +1,7 @@
 package com.grasp.controller;
 
 import com.grasp.model.User;
+import com.grasp.model.dto.UserListDTO;
 import com.grasp.model.dto.UserSignUpDTO;
 import com.grasp.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -49,6 +50,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    // TODO: think about merging these two
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> updateUser(@RequestBody UserSignUpDTO userDTO) {
 
@@ -70,7 +72,7 @@ public class UserController {
     }
 
     @RequestMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<UserListDTO> getAllUsers() {
+        return new ResponseEntity<>(new UserListDTO(userService.getAllUsers()), HttpStatus.OK);
     }
 }
