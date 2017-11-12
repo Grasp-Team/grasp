@@ -1,9 +1,11 @@
 package com.grasp.service;
 
+import com.grasp.dao.CourseCatalogDao;
 import com.grasp.dao.TutorDao;
 import com.grasp.dao.UserDao;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
+import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,13 @@ public class TutorService {
 
     private TutorDao tutorDao;
     private UserDao userDao;
+    private CourseCatalogDao courseCatalogDao;
 
     @Autowired
-    public TutorService(TutorDao tutorDao, UserDao userDao) {
+    public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao) {
         this.tutorDao = tutorDao;
         this.userDao = userDao;
+        this.courseCatalogDao = courseCatalogDao;
     }
 
     public List<User> getAllTutors() {
@@ -48,6 +52,19 @@ public class TutorService {
         }
 
         return users;
+    }
+
+    public User registerTutor(NewTutorDTO newTutorDTO) {
+        List<Tutor> tutorEntries = newTutorDTO.convertToEntity(courseCatalogDao);
+        User tutor = userDao.findUserById(newTutorDTO.getUserId());
+
+        if (CollectionHelper.isEmpty(tutorEntries) || tutor == null) {
+            return null;
+        }
+
+        tutor.setUserType(User.UserType.TUTOR);
+        tutorDao.save(tutorEntries);
+        return userDao.save(tutor);
     }
 
 }

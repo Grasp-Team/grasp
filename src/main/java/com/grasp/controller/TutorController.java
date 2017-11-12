@@ -3,14 +3,12 @@ package com.grasp.controller;
 
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
+import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.service.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
 import java.util.List;
@@ -41,6 +39,18 @@ public class TutorController {
 
         return new ResponseEntity<>(tutors, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/newTutor", method = RequestMethod.POST)
+    public ResponseEntity<User> registerTutor(@RequestBody NewTutorDTO newTutorDTO) {
+        User newTutor = tutorService.registerTutor(newTutorDTO);
+
+        if (newTutor == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(newTutor, HttpStatus.OK);
+    }
+
 
 
 }
