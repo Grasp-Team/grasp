@@ -13,10 +13,9 @@ import java.util.Date;
 
 public class JWT {
 
-    @Value("${api.secret}")
-    private static String apiSecret;
+    private static final String API_SECRET = System.getenv("API_SECRET");
 
-    private static Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(apiSecret),
+    private final static Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(API_SECRET),
             SignatureAlgorithm.HS512.getJcaName());
 
     public static String createJwt(String id, String issuer, String subject, long expiration) {

@@ -1,6 +1,7 @@
 package com.grasp.controller;
 
 
+import com.grasp.model.dto.CourseCatalogListDTO;
 import com.grasp.service.CourseCatalogService;
 import com.grasp.model.CourseCatalog;
 import com.grasp.util.CollectionHelper;
@@ -25,8 +26,8 @@ public class CourseCatalogController {
     }
 
     @RequestMapping()
-    public ResponseEntity<List<CourseCatalog>> getAllCourses() {
-        return new ResponseEntity<>(courseCatalogService.getAllCourses(), HttpStatus.OK);
+    public ResponseEntity<CourseCatalogListDTO> getAllCourses() {
+        return new ResponseEntity<>(new CourseCatalogListDTO(courseCatalogService.getAllCourses()), HttpStatus.OK);
     }
 
     @RequestMapping("/code/{code}")
@@ -41,14 +42,14 @@ public class CourseCatalogController {
     }
 
     @RequestMapping("/subject/{subject}")
-    public ResponseEntity<List<CourseCatalog>> getCoursesBySubject(@PathVariable("subject") String subject) {
+    public ResponseEntity<CourseCatalogListDTO> getCoursesBySubject(@PathVariable("subject") String subject) {
         List<CourseCatalog> courseCatalogs = courseCatalogService.getCoursesBySubject(subject);
 
         if (CollectionHelper.isEmpty(courseCatalogs)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(courseCatalogs, HttpStatus.OK);
+        return new ResponseEntity<>(new CourseCatalogListDTO(courseCatalogs), HttpStatus.OK);
     }
 
 }
