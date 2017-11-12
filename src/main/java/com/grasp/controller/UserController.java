@@ -1,6 +1,8 @@
 package com.grasp.controller;
 
 import com.grasp.model.User;
+import com.grasp.model.dto.EntityConverter;
+import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
 import com.grasp.model.dto.UserSignUpDTO;
 import com.grasp.service.UserService;
@@ -18,28 +20,27 @@ import java.util.UUID;
 public class UserController {
 
     private UserService userService;
-
-    private ModelMapper modelMapper;
+    private EntityConverter entityConverter;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, EntityConverter entityConverter) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
+        this.entityConverter = entityConverter;
     }
 
     @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
-    public ResponseEntity<User> getByName(@PathVariable("email") String email) {
+    public ResponseEntity<UserDTO> getByName(@PathVariable("email") String email) {
         User user = userService.getByUserName(email);
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> getById(@PathVariable("id") UUID uid) {
+    public ResponseEntity<UserDTO> getById(@PathVariable("id") UUID uid) {
 
         User user = userService.getById(uid);
 
@@ -47,32 +48,32 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
     }
 
     // TODO: think about merging these two
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> updateUser(@RequestBody UserSignUpDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserSignUpDTO userDTO) {
 
-        User user = userService.updateUser(UserSignUpDTO.convertToEntity(userDTO, modelMapper));
+        User user = userService.updateUser(entityConverter.convertToEntity(userDTO));
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<User> signUp(@RequestBody UserSignUpDTO userDTO) {
+    public ResponseEntity<UserDTO> signUp(@RequestBody UserSignUpDTO userDTO) {
 
-        User user = userService.signUp(UserSignUpDTO.convertToEntity(userDTO, modelMapper));
+        User user = userService.signUp(entityConverter.convertToEntity(userDTO));
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
     }
 
     @RequestMapping()
     public ResponseEntity<UserListDTO> getAllUsers() {
-        return new ResponseEntity<>(new UserListDTO(userService.getAllUsers()), HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(userService.getAllUsers()), HttpStatus.OK);
     }
 }

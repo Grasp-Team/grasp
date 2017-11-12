@@ -1,6 +1,5 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +9,12 @@ import java.util.List;
 @Setter
 public class UserListDTO {
 
-    private List<User> users;
+    private List<UserDTO> users;
 
     public UserListDTO() {
     }
 
-    public UserListDTO(List<User> users) {
+    public UserListDTO(List<UserDTO> users) {
         this.users = users;
     }
 }
