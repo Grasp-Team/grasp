@@ -1,16 +1,15 @@
 package com.grasp.controller;
 
-import com.grasp.model.User;
 import com.grasp.model.dto.AuthenticationDTO;
-import com.grasp.model.dto.UserSignUpDTO;
-import com.grasp.security.model.UserAuthenticationResponse;
-import com.grasp.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,43 +19,49 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/")
 public class UserAuthenticationController {
 
-    private UserService userService;
-    private ModelMapper modelMapper;
+    private AuthenticationManager authenticationManager;
+    private SecurityContextRepository securityContextRepository;
 
     @Autowired
-    public UserAuthenticationController(UserService userService, ModelMapper modelMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-    }
-
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<User> signUp(@RequestBody UserSignUpDTO userDTO) {
-
-        User user = userService.signUp(UserSignUpDTO.convertToEntity(userDTO, modelMapper));
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public UserAuthenticationController(AuthenticationManager authenticationManager,
+                                        SecurityContextRepository securityContextRepository) {
+        this.authenticationManager = authenticationManager;
+        this.securityContextRepository = securityContextRepository;
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<UserAuthenticationResponse> authentication(@RequestBody AuthenticationDTO authenticationDTO,
-                                                                     HttpServletRequest request,
-                                                                     HttpServletResponse response) {
+    public ResponseEntity<String> authentication(@RequestBody AuthenticationDTO authenticationDTO,
+                                                 HttpServletRequest request,
+                                                 HttpServletResponse response) {
 
-        UserAuthenticationResponse authenticationResponse = new UserAuthenticationResponse();
+        System.out.println("Authenticating : " + authenticationDTO.getUsername());
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                authenticationDTO.getUsername(), authenticationDTO.getPassword());
 
         try {
 
-            authenticationManager
+            Authentication result = authenticationManager.authenticate(authenticationToken);
 
-        } catch (InternalAuthenticationServiceException e) {
+            if (result == null) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            System.out.println("Authenticating: " + result.getDetails());
+
+            SecurityContextHolder.getContext().setAuthentication(result);
+            securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
+
+            return new ResponseEntity<>((String) result.getDetails(), HttpStatus.OK);
 
         } catch (AuthenticationException e) {
-
+            SecurityContextHolder.clearContext();
         }
 
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 }

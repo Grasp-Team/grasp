@@ -61,7 +61,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<User> signUp(@RequestBody UserSignUpDTO userDTO) {
 

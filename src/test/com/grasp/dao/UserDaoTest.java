@@ -36,32 +36,32 @@ public class UserDaoTest {
 
     @Test
     public void test() throws Exception {
-        User user = new User("Jacob2", "Moore", "some Email..", 4, "se", "vpadmin");
-
-        userDao.save(user);
-
-        user = userDao.findUserByFirstName("Jacob2");
-
-        CourseCatalog courseCatalog = new CourseCatalog();
-        courseCatalog.setId(1);
-        courseCatalog.setCatalogNumber(123);
-        courseCatalog.setCode("MATH 123");
-        courseCatalog.setSubject("MATH");
-
-        courseCatalogDao.save(courseCatalog);
-
-        courseCatalogDao.findByCode("MATH 123");
-
-        List<Tutor> tutors = new ArrayList<>();
-
-        Tutor tutor = new Tutor(user.getId(), courseCatalog);
-
-        tutors.add(tutor);
-
-        user.setTutors(tutors);
-
-        userDao.save(user);
-
-        System.out.println(userDao.findUserById(user.getId()).toString());
+//        User user = new User("Jacob2", "Moore", "some Email..", 4, "se", "vpadmin");
+//
+//        userDao.save(user);
+//
+//        user = userDao.findUserByFirstName("Jacob2");
+//
+//        CourseCatalog courseCatalog = new CourseCatalog();
+//        courseCatalog.setId(1);
+//        courseCatalog.setCatalogNumber(123);
+//        courseCatalog.setCode("MATH 123");
+//        courseCatalog.setSubject("MATH");
+//
+//        courseCatalogDao.save(courseCatalog);
+//
+//        courseCatalogDao.findByCode("MATH 123");
+//
+//        List<Tutor> tutors = new ArrayList<>();
+//
+//        Tutor tutor = new Tutor(user.getId(), courseCatalog);
+//
+//        tutors.add(tutor);
+//
+//        user.setTutors(tutors);
+//
+//        userDao.save(user);
+//
+//        System.out.println(userDao.findUserById(user.getId()).toString());
     }
 }
