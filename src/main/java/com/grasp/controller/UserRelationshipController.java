@@ -46,9 +46,18 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
-    // Add endpoint to query a relationship
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<UserRelationship> getRelationship()
+    @RequestMapping(value = "/status", method = RequestMethod.GET)
+    public ResponseEntity<UserRelationshipDTO> getRelationship(@RequestBody UserRelationshipDTO userRelationshipDTO) {
+        UserRelationship relationship = relationshipService.getRelationshipStatus(entityConverter
+                .convertToEntity(userRelationshipDTO));
+
+        if (relationship == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
+
+    }
 
 
 }

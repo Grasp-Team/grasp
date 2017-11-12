@@ -35,4 +35,11 @@ public class UserRelationshipService {
 
     }
 
+    public UserRelationship getRelationshipStatus(UserRelationship userRelationship) {
+        return userRelationshipDao
+                .findUserRelationshipByUserIdAndTutorId(userRelationship.getUserId(),
+                        userRelationship.getTutorId());
+    }
+
+
 }
