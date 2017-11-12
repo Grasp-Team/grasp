@@ -28,8 +28,4 @@ public class UserRelationshipDTO {
         this.userId = userId;
         this.relationshipStatus = relationshipStatus;
     }
-
-    public static UserRelationship convertToEntity(UserRelationshipDTO userRelationshipDTO, ModelMapper modelMapper) {
-        return modelMapper.map(userRelationshipDTO, UserRelationship.class);
-    }
 }
