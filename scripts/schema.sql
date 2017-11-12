@@ -44,7 +44,7 @@ CREATE TABLE users.relationships (
 	id SERIAL PRIMARY KEY,
 	tutor uuid REFERENCES users.users (id),
 	student uuid REFERENCES users.users (id),
-	status text CHECK (status='Accepted' OR status='Pending' OR status='Rejected')
+	status text CHECK (status='ACCEPTED' OR status='PENDING' OR status='REJECTED')
 );
 
 CREATE TABLE course.course (
