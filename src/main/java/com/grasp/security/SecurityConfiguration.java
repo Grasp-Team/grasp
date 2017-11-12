@@ -10,12 +10,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
-public class SecurityBeans {
+public class SecurityConfiguration {
 
     private UserService userService;
 
     @Autowired
-    public SecurityBeans(UserService userService) {
+    public SecurityConfiguration(UserService userService) {
         this.userService = userService;
     }
 
