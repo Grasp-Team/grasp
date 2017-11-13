@@ -1,8 +1,6 @@
 package com.grasp.security;
 
-import com.grasp.security.jwt.JWT;
 import com.grasp.security.model.APIAuthenticationToken;
-import io.jsonwebtoken.Claims;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -14,7 +12,6 @@ import org.springframework.security.web.context.SecurityContextRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 public class EhcacheSecurityContextRepo implements SecurityContextRepository {
 

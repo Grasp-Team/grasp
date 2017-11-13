@@ -30,6 +30,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 @Service
 public class ElasticsearchService {
 
+    private static final int SEARCH_LIMIT = 50;
     private String index = System.getenv("SEARCHBOX_INDEX");
     private JestClient client;
     private EntityConverter entityConverter;
@@ -63,11 +64,11 @@ public class ElasticsearchService {
 
         BoolQueryBuilder qb = boolQuery();
 
-        for(UserSubject subject : subjects) {
+        for (UserSubject subject : subjects) {
             qb.should(matchQuery("tutors.courseCatalog.subject", subject.getSubject()));
         }
 
-        sourceBuilder.query(qb);
+        sourceBuilder.query(qb).size(SEARCH_LIMIT).from(0);
 
         Search search = new Search.Builder(sourceBuilder.toString())
                 .addIndex(index)
