@@ -1,6 +1,5 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.Subject;
 import lombok.Getter;
 import lombok.Setter;
 

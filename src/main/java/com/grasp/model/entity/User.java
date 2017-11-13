@@ -1,4 +1,4 @@
-package com.grasp.model;
+package com.grasp.model.entity;
 
 import com.grasp.security.model.UserRole;
 import lombok.Getter;

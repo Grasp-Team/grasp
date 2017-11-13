@@ -1,8 +1,5 @@
 package com.grasp.dao;
 
-import com.grasp.model.CourseCatalog;
-import com.grasp.model.Tutor;
-import com.grasp.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

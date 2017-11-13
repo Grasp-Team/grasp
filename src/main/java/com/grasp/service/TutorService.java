@@ -4,9 +4,9 @@ import com.grasp.dao.CourseCatalogDao;
 import com.grasp.dao.TutorDao;
 import com.grasp.dao.UserDao;
 import com.grasp.exception.ServiceException;
-import com.grasp.model.CourseCatalog;
-import com.grasp.model.Tutor;
-import com.grasp.model.User;
+import com.grasp.model.entity.CourseCatalog;
+import com.grasp.model.entity.Tutor;
+import com.grasp.model.entity.User;
 import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -112,7 +112,7 @@ public class TutorService {
     public User updateCoursesForTutor(UUID userId, List<String> courseCodes) {
         User tutor = userDao.findUserById(userId);
 
-        if (tutor.getUserType() != User.UserType.TUTOR) {
+        if (tutor == null || tutor.getUserType() != User.UserType.TUTOR) {
             return null;
         }
 
@@ -122,7 +122,28 @@ public class TutorService {
         List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(userId, c)).collect(
                 Collectors.toList());
 
-        tutorDao.save(tutorEntries);
+        tutor.setTutors(tutorEntries);
+        tutor = userDao.save(tutor);
+
+        elasticsearchService.upsertTutor(tutor);
+
+        return tutor;
+    }
+
+    public User deleteCoursesForTutor(UUID userId) {
+
+        User tutor = userDao.findUserById(userId);
+
+        if(tutor == null || tutor.getUserType() != User.UserType.TUTOR) {
+            return null;
+        }
+
+        tutorDao.deleteAllByUid(userId);
+
+        tutor.setTutors(new ArrayList<>());
+        tutor = userDao.save(tutor);
+
+        elasticsearchService.upsertTutor(tutor);
 
         return tutor;
     }

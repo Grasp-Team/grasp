@@ -1,7 +1,7 @@
 package com.grasp.service;
 
 import com.grasp.dao.UserRelationshipDao;
-import com.grasp.model.UserRelationship;
+import com.grasp.model.entity.UserRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

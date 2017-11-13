@@ -2,17 +2,13 @@ package com.grasp.service;
 
 import com.grasp.dao.UserDao;
 import com.grasp.exception.ServiceException;
-import com.grasp.model.User;
-import com.grasp.security.model.APIAuthenticationToken;
+import com.grasp.model.entity.User;
 import com.grasp.security.model.UserAuthenticationRequest;
 import com.grasp.security.model.UserAuthenticationResponse;
 import com.grasp.util.CollectionHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +28,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User getByUserName(String userName) {
-        return userDao.findUserByEmail(userName);
+    public User getByEmail(String email) {
+        return userDao.findUserByEmail(email);
     }
 
     public User getById(UUID uid) {
@@ -110,7 +106,7 @@ public class UserService {
 
     public UserAuthenticationResponse authenticate(UserAuthenticationRequest userAuthenticationRequest) {
 
-        User user = getByUserName(userAuthenticationRequest.getUserName());
+        User user = getByEmail(userAuthenticationRequest.getUserName());
 
         if (user == null) {
             throw new ServiceException(HttpStatus.NOT_FOUND,

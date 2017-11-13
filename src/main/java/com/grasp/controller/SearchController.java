@@ -1,7 +1,7 @@
 package com.grasp.controller;
 
 import com.grasp.exception.ControllerException;
-import com.grasp.model.User;
+import com.grasp.model.entity.User;
 import com.grasp.model.dto.UserListDTO;
 import com.grasp.service.ElasticsearchService;
 import com.grasp.service.UserService;

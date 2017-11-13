@@ -1,23 +1,18 @@
 package com.grasp.service;
 
 import com.grasp.exception.ServiceException;
-import com.grasp.model.User;
-import com.grasp.model.UserSubject;
+import com.grasp.model.entity.User;
+import com.grasp.model.entity.UserSubject;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
 import com.grasp.model.util.EntityConverter;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
-import io.searchbox.client.JestResult;
 import io.searchbox.core.*;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

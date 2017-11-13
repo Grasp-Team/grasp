@@ -13,7 +13,7 @@ import java.util.Set;
 public class APIAuthenticationToken implements CredentialsContainer, Authentication  {
 
     private static final String TOKEN_ISSUER = "Grasp";
-    private static final long DEFAULT_TOKEN_EXPIRATION = 60000;
+    private static final long DEFAULT_TOKEN_EXPIRATION = 604800000;
 
     private Set<GrantedAuthority> authorities = new HashSet<>();
     private String name;

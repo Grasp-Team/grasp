@@ -1,6 +1,6 @@
 package com.grasp.dao;
 
-import com.grasp.model.UserSubject;
+import com.grasp.model.entity.UserSubject;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;

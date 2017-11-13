@@ -1,7 +1,7 @@
 package com.grasp.controller;
 
 import com.grasp.exception.ControllerException;
-import com.grasp.model.User;
+import com.grasp.model.entity.User;
 import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
@@ -29,7 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getByName(@PathVariable("email") String email) {
-        User user = userService.getByUserName(email);
+        User user = userService.getByEmail(email);
 
         if (user == null) {
             throw new ControllerException(HttpStatus.NOT_FOUND, "ERROR: Unable to find user with email: " + email);

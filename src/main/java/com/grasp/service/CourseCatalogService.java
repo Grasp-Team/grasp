@@ -1,7 +1,7 @@
 package com.grasp.service;
 
 import com.grasp.dao.CourseCatalogDao;
-import com.grasp.model.CourseCatalog;
+import com.grasp.model.entity.CourseCatalog;
 import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

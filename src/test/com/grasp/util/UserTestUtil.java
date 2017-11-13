@@ -1,6 +1,6 @@
 package com.grasp.util;
 
-import com.grasp.model.User;
+import com.grasp.model.entity.User;
 import com.grasp.security.model.UserRole;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

@@ -1,4 +1,4 @@
-package com.grasp.model;
+package com.grasp.model.entity;
 
 
 import lombok.Getter;

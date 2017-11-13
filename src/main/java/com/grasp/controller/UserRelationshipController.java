@@ -1,6 +1,6 @@
 package com.grasp.controller;
 
-import com.grasp.model.UserRelationship;
+import com.grasp.model.entity.UserRelationship;
 import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.UserRelationshipDTO;
 import com.grasp.service.UserRelationshipService;

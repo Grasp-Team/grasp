@@ -1,9 +1,8 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.UserRelationship;
+import com.grasp.model.entity.UserRelationship;
 import lombok.Getter;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.grasp.util;
 
-import com.grasp.model.CourseCatalog;
+import com.grasp.model.entity.CourseCatalog;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.grasp.security;
 
+import com.grasp.security.jwt.JWT;
 import com.grasp.security.model.APIAuthenticationToken;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -24,6 +25,13 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
 
             String token = extractToken(requestResponseHolder.getRequest());
 
+            // ensure token is valid
+            try {
+                JWT.parseJwt(token);
+            } catch(RuntimeException e) {
+                return SecurityContextHolder.createEmptyContext();
+            }
+
             return (SecurityContext) getCache().get(token).getObjectValue();
         }
 
@@ -36,7 +44,6 @@ public class EhcacheSecurityContextRepo implements SecurityContextRepository {
 
         if (authentication != null && authentication instanceof APIAuthenticationToken) {
             String token = (String) authentication.getDetails();
-
 
             if (token != null) {
                 System.out.println("Saving Token: " + token);

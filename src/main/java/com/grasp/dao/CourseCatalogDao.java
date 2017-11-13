@@ -1,6 +1,6 @@
 package com.grasp.dao;
 
-import com.grasp.model.CourseCatalog;
+import com.grasp.model.entity.CourseCatalog;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;

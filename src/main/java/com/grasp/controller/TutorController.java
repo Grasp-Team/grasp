@@ -1,7 +1,7 @@
 package com.grasp.controller;
 
 
-import com.grasp.model.User;
+import com.grasp.model.entity.User;
 import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
@@ -62,7 +62,7 @@ public class TutorController {
         return new ResponseEntity<>(entityConverter.convertToDTO(newTutor), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> updateTutorCourses(@PathVariable("id") UUID userId,
                                                       @RequestBody NewTutorDTO newTutorDTO) {
         User user = tutorService.updateCoursesForTutor(userId, newTutorDTO.getCourseCodes());
@@ -74,10 +74,21 @@ public class TutorController {
         return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<UserDTO> deleteTutorCourses(@PathVariable("id") UUID userId){
+        User user = tutorService.deleteCoursesForTutor(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity unregisterTutor(@PathVariable("id") UUID id) {
 
-        User tutor = tutorService.unregisterTutor(id);
+        tutorService.unregisterTutor(id);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

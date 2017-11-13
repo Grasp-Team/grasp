@@ -1,6 +1,6 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.CourseCatalog;
+import com.grasp.model.entity.CourseCatalog;
 import lombok.Getter;
 import lombok.Setter;
 

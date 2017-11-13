@@ -1,7 +1,7 @@
 package com.grasp.controller;
 
 import com.grasp.exception.ControllerException;
-import com.grasp.model.CourseCatalog;
+import com.grasp.model.entity.CourseCatalog;
 import com.grasp.model.dto.CourseCatalogListDTO;
 import com.grasp.service.CourseCatalogService;
 import org.junit.Before;

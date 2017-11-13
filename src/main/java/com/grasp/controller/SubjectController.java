@@ -1,7 +1,7 @@
 package com.grasp.controller;
 
-import com.grasp.model.Subject;
-import com.grasp.model.UserSubject;
+import com.grasp.model.entity.Subject;
+import com.grasp.model.entity.UserSubject;
 import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.SubjectListDTO;
 import com.grasp.model.dto.UserSubjectDTO;
@@ -38,6 +38,13 @@ public class SubjectController {
         return new ResponseEntity<>(entityConverter.convertToSubjectListDTO(subjectList), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<UserSubjectDTO> addSubjectsForUser(@RequestBody UserSubjectDTO userSubjectDTO) {
+        List<UserSubject> subjects = subjectService.addSubjectsForUser(userSubjectDTO.getUserId(), entityConverter.convertToEntity(userSubjectDTO));
+
+        return new ResponseEntity<>(entityConverter.convertToUserSubjectDTO(subjects), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
     public ResponseEntity<UserSubjectDTO> updateSubjectsForUser(@PathVariable("userId") UUID userId,
                                                                 @RequestBody UserSubjectDTO userSubjectDTO) {
@@ -51,9 +58,10 @@ public class SubjectController {
         return new ResponseEntity<>(entityConverter.convertToUserSubjectDTO(userSubjects), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserSubjectDTO> addSubjectsForUser(@RequestBody UserSubjectDTO userSubjectDTO) {
-        List<UserSubject> subjects = subjectService.addSubjectsForUser(entityConverter.convertToEntity(userSubjectDTO));
-        return new ResponseEntity<>(entityConverter.convertToUserSubjectDTO(subjects), HttpStatus.OK);
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteSubjectsForUser(@PathVariable("userId") UUID userId) {
+        subjectService.deleteSubjectsForUser(userId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

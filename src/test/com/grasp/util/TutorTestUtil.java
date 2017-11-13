@@ -1,8 +1,8 @@
 package com.grasp.util;
 
-import com.grasp.model.CourseCatalog;
-import com.grasp.model.Tutor;
-import com.grasp.model.User;
+import com.grasp.model.entity.CourseCatalog;
+import com.grasp.model.entity.Tutor;
+import com.grasp.model.entity.User;
 import com.grasp.security.model.UserRole;
 
 import java.util.*;

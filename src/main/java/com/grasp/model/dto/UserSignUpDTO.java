@@ -1,9 +1,7 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
 
 @Getter
 @Setter

@@ -1,7 +1,7 @@
 package com.grasp.model.dto;
 
-import com.grasp.model.Tutor;
-import com.grasp.model.User;
+import com.grasp.model.entity.Tutor;
+import com.grasp.model.entity.User;
 import com.grasp.security.model.UserRole;
 import io.searchbox.annotations.JestId;
 import lombok.Getter;

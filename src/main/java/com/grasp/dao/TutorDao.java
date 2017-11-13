@@ -1,6 +1,6 @@
 package com.grasp.dao;
 
-import com.grasp.model.Tutor;
+import com.grasp.model.entity.Tutor;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface TutorDao extends CrudRepository<Tutor, Long> {
     List<Tutor> findTutorsByCourseCatalog_Code(String courseCode);
     void deleteAllByUid(UUID tutorId);
+    void deleteAllByCourseCatalog_CodeIn(List<String> courseCode);
 }
