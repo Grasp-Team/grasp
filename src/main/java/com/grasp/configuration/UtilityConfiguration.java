@@ -19,9 +19,6 @@ public class UtilityConfiguration {
 
     @Bean
     public JestClientFactory jestClientFactory() {
-
-        System.out.println("CONNECTION URL: " + connectionUrl);
-
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig
                 .Builder(connectionUrl)

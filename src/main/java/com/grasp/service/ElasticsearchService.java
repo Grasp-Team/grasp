@@ -29,22 +29,11 @@ public class ElasticsearchService {
     }
 
     public void upsertTutor(User user) {
-        // TODO: properly map these to correct object
-
-        System.out.println("USER " + user.toString());
 
         try {
-//            JestResult result = client.execute(new Get.Builder(index, user.getId().toString()).type(TUTOR_TYPE).build());
-//
-//            if(result.isSucceeded()) {
-//                client.execute(new )
-//            } else {
-//            }
             client.execute(new Index.Builder(user).index(index).type(TUTOR_TYPE).build());
         } catch (Exception e) {
-            //TODO: add proper exception handling
-            throw new RuntimeException(e);
-//            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: Unable to build index");
+            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: Unable to build index");
         }
     }
 
