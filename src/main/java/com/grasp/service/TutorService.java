@@ -63,8 +63,9 @@ public class TutorService {
     public User registerTutor(UUID tutorId, List<String> courseCodes) {
         List<CourseCatalog> courseCatalogEntries = courseCatalogDao.findAllByCodeIn(courseCodes);
         User tutor = userDao.findUserById(tutorId);
+        UUID id = tutor.getId();
 
-        List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(tutor.getId(), c)).collect(
+        List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(id, c)).collect(
                 Collectors.toList());
 
         if (CollectionHelper.isEmpty(tutorEntries) || tutor == null) {
