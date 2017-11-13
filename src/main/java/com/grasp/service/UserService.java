@@ -101,6 +101,10 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        if(userDao.findUserByEmail(user.getEmail()) != null) {
+            return null;
+        }
+
         return userDao.save(user);
     }
 

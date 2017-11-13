@@ -33,7 +33,6 @@ public class CourseCatalog {
     @Column(name = "url")
     private String url;
 
-
     public CourseCatalog() {
     }
 

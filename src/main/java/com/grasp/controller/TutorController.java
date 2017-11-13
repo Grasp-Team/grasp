@@ -2,7 +2,7 @@ package com.grasp.controller;
 
 
 import com.grasp.model.User;
-import com.grasp.model.dto.EntityConverter;
+import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,19 +22,21 @@ public class TutorController {
     private TutorService tutorService;
     private EntityConverter entityConverter;
 
+    @Autowired
     public TutorController(TutorService tutorService, EntityConverter entityConverter) {
         this.tutorService = tutorService;
         this.entityConverter = entityConverter;
     }
 
-    @Autowired
-    public TutorController(TutorService tutorService) {
-        this.tutorService = tutorService;
-    }
-
     @RequestMapping()
     public ResponseEntity<UserListDTO> getAllTutors() {
-        return new ResponseEntity<>(entityConverter.convertToDTO(tutorService.getAllTutors()), HttpStatus.OK);
+        List<User> tutors = tutorService.getAllTutors();
+
+        if (tutors == null) {
+            tutors = new ArrayList<>();
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToDTO(tutors), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/course/{courseCode}", method = RequestMethod.GET)
