@@ -49,23 +49,21 @@ public class UserAuthenticationController {
 
         String token = jwtDTO.getApiToken();
         User user;
+        Claims claims;
 
         try {
-            System.out.println("TOKEN: " + token);
-            Claims claims = JWT.parseJwt(token);
-
-            user = userService.getByEmail(claims.getSubject());
-
-            if (user == null) {
-                throw new ControllerException(HttpStatus.NOT_FOUND,
-                        "ERROR: Unable to find user: " + claims.getSubject());
-            }
+            claims = JWT.parseJwt(token);
+            user = userService.getByEmail(claims.getId());
 
             // should also check if exists in cache - but it probably will since we're storing so many
 
         } catch (RuntimeException e) {
-            System.out.println(e.toString());
             throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR during parsing of JWT");
+        }
+
+        if (user == null) {
+            throw new ControllerException(HttpStatus.NOT_FOUND,
+                    "ERROR: Unable to find user: " + claims.getId());
         }
 
         return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
