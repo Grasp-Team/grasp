@@ -78,7 +78,6 @@ public class TutorService {
 
         elasticsearchService.upsertTutor(user);
 
-
         return user;
     }
 
