@@ -64,6 +64,7 @@ public class UserAuthenticationController {
             // should also check if exists in cache - but it probably will since we're storing so many
 
         } catch (RuntimeException e) {
+            System.out.println(e.toString());
             throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR during parsing of JWT");
         }
 
