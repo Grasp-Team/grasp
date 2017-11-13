@@ -54,13 +54,17 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, int year, String program, String faculty) {
+    public User(String firstName, String lastName, String email, String password, int year, String program,
+                String faculty, UserType userType, UserRole userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.year = year;
         this.program = program;
         this.faculty = faculty;
+        this.userType = userType;
+        this.userRole = userRole;
     }
 
     @Override

@@ -6,9 +6,7 @@ import com.grasp.dao.UserDao;
 import com.grasp.model.CourseCatalog;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
-import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.util.CollectionHelper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +21,12 @@ public class TutorService {
     private TutorDao tutorDao;
     private UserDao userDao;
     private CourseCatalogDao courseCatalogDao;
-    private ModelMapper modelMapper;
 
     @Autowired
-    public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao,
-                        ModelMapper modelMapper) {
+    public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao) {
         this.tutorDao = tutorDao;
         this.userDao = userDao;
         this.courseCatalogDao = courseCatalogDao;
-        this.modelMapper = modelMapper;
     }
 
     public List<User> getAllTutors() {
