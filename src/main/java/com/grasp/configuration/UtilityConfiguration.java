@@ -10,8 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class UtilityConfiguration {
 
-    @Value("searchbox.url")
-    private String connectionUrl;
+    private String connectionUrl = System.getenv("SEARCHBOX_SSL_URL");
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
