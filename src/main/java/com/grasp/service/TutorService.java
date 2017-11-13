@@ -71,6 +71,10 @@ public class TutorService {
             return null;
         }
 
+        // blank tutor entries
+        tutor.setTutors(new ArrayList<>());
+        tutor = userDao.save(tutor);
+
         tutor.setUserType(User.UserType.TUTOR);
         tutor.setTutors(tutorEntries);
 
@@ -92,9 +96,9 @@ public class TutorService {
         tutor.setUserType(User.UserType.STANDARD);
         tutor.setTutors(new ArrayList<>());
 
-        elasticsearchService.deleteTutor(tutorId);
-
         User user = userDao.save(tutor);
+
+        elasticsearchService.deleteTutor(tutorId);
 
         return user;
     }
