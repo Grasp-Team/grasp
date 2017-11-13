@@ -37,6 +37,8 @@ public class SubjectController {
         return new ResponseEntity<>(entityConverter.convertToSubjectListDTO(subjectList), HttpStatus.OK);
     }
 
+    //TODO: add delete mechanism for subjects for a user
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UserSubjectDTO> addSubjectsForUser(@RequestBody UserSubjectDTO userSubjectDTO) {
         List<UserSubject> subjects = subjectService.addSubjectsForUser(entityConverter.convertToEntity(userSubjectDTO));
