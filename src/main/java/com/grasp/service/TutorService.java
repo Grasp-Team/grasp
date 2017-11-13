@@ -108,4 +108,22 @@ public class TutorService {
 
         return user;
     }
+
+    public User updateCoursesForTutor(UUID userId, List<String> courseCodes) {
+        User tutor = userDao.findUserById(userId);
+
+        if (tutor.getUserType() != User.UserType.TUTOR) {
+            return null;
+        }
+
+        tutorDao.deleteAllByUid(userId);
+
+        List<CourseCatalog> courseCatalogEntries = courseCatalogDao.findAllByCodeIn(courseCodes);
+        List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(userId, c)).collect(
+                Collectors.toList());
+
+        tutorDao.save(tutorEntries);
+
+        return tutor;
+    }
 }
