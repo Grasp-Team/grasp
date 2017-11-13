@@ -52,7 +52,7 @@ CREATE TABLE course.subjects (
 	subject text PRIMARY KEY
 );
 
-CREATE TABLE course.userSubjects (
+CREATE TABLE course.user_subjects (
 	id SERIAL PRIMARY KEY,
 	uid uuid REFERENCES users.users (id),
 	subject text REFERENCES course.subjects(subject)
