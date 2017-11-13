@@ -3,6 +3,7 @@ package com.grasp.model.dto;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
 import com.grasp.security.model.UserRole;
+import io.searchbox.annotations.JestId;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Setter
 public class UserDTO {
 
+    @JestId
     private UUID id;
     private String firstName;
     private String lastName;
