@@ -27,8 +27,8 @@ CREATE TABLE users.users (
 	email text NOT NULL UNIQUE,
 	password text NOT NULL,
 	year integer NOT NULL,
-	user_type text NOT NULL CHECK(user_type ='STANDARD' OR user_type = 'TUTOR'),
-	user_role text NOT NULL CHECK(user_type = 'STANDARD' OR user_type='ADMIN'),
+	user_type text NOT NULL CHECK(user_type = 'STANDARD' OR user_type = 'TUTOR'),
+	user_role text NOT NULL CHECK(user_role = 'STANDARD' OR user_role='ADMIN'),
 	program text,
 	faculty text
 );

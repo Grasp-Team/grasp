@@ -1,7 +1,10 @@
-package com.grasp.model.dto;
+package com.grasp.model.util;
 
 import com.grasp.dao.UserDao;
 import com.grasp.model.User;
+import com.grasp.model.dto.UserDTO;
+import com.grasp.model.dto.UserListDTO;
+import com.grasp.model.dto.UserSignUpDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
