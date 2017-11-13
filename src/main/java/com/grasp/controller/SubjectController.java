@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/subject")
@@ -37,7 +38,18 @@ public class SubjectController {
         return new ResponseEntity<>(entityConverter.convertToSubjectListDTO(subjectList), HttpStatus.OK);
     }
 
-    //TODO: add delete mechanism for subjects for a user
+    @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
+    public ResponseEntity<UserSubjectDTO> updateSubjectsForUser(@PathVariable("userId") UUID userId,
+                                                                @RequestBody UserSubjectDTO userSubjectDTO) {
+        List<UserSubject> userSubjects = subjectService.updateSubjectsForUser(userId,
+                entityConverter.convertToEntity(userSubjectDTO));
+
+        if (userSubjects.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToUserSubjectDTO(userSubjects), HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UserSubjectDTO> addSubjectsForUser(@RequestBody UserSubjectDTO userSubjectDTO) {

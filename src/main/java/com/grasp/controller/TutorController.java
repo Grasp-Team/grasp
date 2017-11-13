@@ -62,7 +62,17 @@ public class TutorController {
         return new ResponseEntity<>(entityConverter.convertToDTO(newTutor), HttpStatus.OK);
     }
 
-    //TODO: need to make method to add/delete courses for tutors - validate that they are already are a tutor
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> updateTutorCourses(@PathVariable("id") UUID userId,
+                                                      @RequestBody NewTutorDTO newTutorDTO) {
+        User user = tutorService.updateCoursesForTutor(userId, newTutorDTO.getCourseCodes());
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToDTO(user), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity unregisterTutor(@PathVariable("id") UUID id) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SubjectService {
@@ -35,6 +36,16 @@ public class SubjectService {
 
     public List<UserSubject> addSubjectsForUser(List<UserSubject> userSubjects) {
         return (List<UserSubject>) userSubjectDao.save(userSubjects);
+    }
+
+    public List<UserSubject> updateSubjectsForUser(UUID userId, List<UserSubject> updatedUserSubjects) {
+
+        if (CollectionHelper.isEmpty(userSubjectDao.findAllByUserId(userId))) {
+            return new ArrayList<>();
+        }
+
+        userSubjectDao.deleteAllByUserId(userId);
+        return (List<UserSubject>) userSubjectDao.save(updatedUserSubjects);
     }
 
 }
