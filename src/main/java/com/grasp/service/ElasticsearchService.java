@@ -18,8 +18,7 @@ import java.util.UUID;
 @Service
 public class ElasticsearchService {
 
-    @Value("searchbox.index")
-    private String index;
+    private String index = System.getenv("SEARCHBOX_INDEX");
     private JestClient client;
 
     private final static String TUTOR_TYPE = "tutor";
