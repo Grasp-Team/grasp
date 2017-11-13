@@ -10,6 +10,8 @@ import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.core.*;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.UUID;
 
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 @Service
 public class ElasticsearchService {
@@ -65,7 +68,28 @@ public class ElasticsearchService {
 
         sourceBuilder.query(qb).size(SEARCH_LIMIT).from(0);
 
-        Search search = new Search.Builder(sourceBuilder.toString())
+        return executeQuery(sourceBuilder);
+    }
+
+    public UserListDTO searchTutors(String queryString) {
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
+                "tutors.courseCatalog.courseName",
+                "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
+
+        sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);
+
+        return executeQuery(sourceBuilder);
+    }
+
+    private UserListDTO executeQuery(SearchSourceBuilder sourceBuilder) {
+
+        String query = sourceBuilder.toString();
+
+        System.out.println("Executing Query: " + query);
+
+        Search search = new Search.Builder(query)
                 .addIndex(index)
                 .addType(TUTOR_TYPE)
                 .build();

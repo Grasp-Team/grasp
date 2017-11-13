@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.UUID;
 
 @RestController
@@ -38,5 +39,10 @@ public class SearchController {
         }
 
         return new ResponseEntity<>(elasticsearchService.searchTutorBySubject(user.getSubjects()), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<UserListDTO> search(@PathParam("query") String queryString) {
+        return new ResponseEntity<UserListDTO>(elasticsearchService.searchTutors(queryString), HttpStatus.OK);
     }
 }
