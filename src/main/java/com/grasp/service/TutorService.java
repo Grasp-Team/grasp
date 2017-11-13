@@ -21,12 +21,14 @@ public class TutorService {
     private TutorDao tutorDao;
     private UserDao userDao;
     private CourseCatalogDao courseCatalogDao;
+    private ElasticsearchService elasticsearchService;
 
     @Autowired
     public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao) {
         this.tutorDao = tutorDao;
         this.userDao = userDao;
         this.courseCatalogDao = courseCatalogDao;
+        this.elasticsearchService = elasticsearchService;
     }
 
     public List<User> getAllTutors() {
@@ -68,7 +70,31 @@ public class TutorService {
         }
 
         tutor.setUserType(User.UserType.TUTOR);
-        tutorDao.save(tutorEntries);
-        return userDao.save(tutor);
+        tutor.setTutors(tutorEntries);
+
+        User user = userDao.save(tutor);
+
+        elasticsearchService.upsertTutor(user);
+
+        return user;
+    }
+
+    public User unregisterTutor(UUID tutorId) {
+
+        User tutor = userDao.findUserById(tutorId);
+
+        if(tutor == null) {
+            // TODO: add proper exception handling
+            throw new RuntimeException();
+        }
+
+        tutor.setUserType(User.UserType.STANDARD);
+        tutor.setTutors(new ArrayList<>());
+
+        User user = userDao.save(tutor);
+
+        elasticsearchService.deleteTutor(tutorId);
+
+        return user;
     }
 }

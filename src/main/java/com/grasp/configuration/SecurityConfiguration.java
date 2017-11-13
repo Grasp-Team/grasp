@@ -1,5 +1,8 @@
-package com.grasp.security;
+package com.grasp.configuration;
 
+import com.grasp.security.APIAuthenticaticationEntryPoint;
+import com.grasp.security.EhcacheSecurityContextRepo;
+import com.grasp.security.GraspAuthenticationProvider;
 import com.grasp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

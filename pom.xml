@@ -99,13 +99,26 @@
       <version>1.10.19</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-test-autoconfigure</artifactId>
-          <version>1.5.2.RELEASE</version>
-          <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>io.searchbox</groupId>
+      <artifactId>jest</artifactId>
+      <version>0.1.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-test-autoconfigure</artifactId>
+        <version>1.5.2.RELEASE</version>
+        <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>sonatype</id>
+      <name>Sonatype Groups</name>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>

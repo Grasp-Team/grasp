@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tutor")
@@ -61,4 +63,10 @@ public class TutorController {
         return new ResponseEntity<>(entityConverter.convertToDTO(newTutor), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity unregisterTutor(@PathParam("id") UUID id) {
+
+
+
+    }
 }

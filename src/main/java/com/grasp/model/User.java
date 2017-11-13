@@ -2,6 +2,7 @@ package com.grasp.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grasp.security.model.UserRole;
+import io.searchbox.annotations.JestId;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,6 +23,7 @@ public class User {
     }
 
     @Id
+    @JestId
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "id")
