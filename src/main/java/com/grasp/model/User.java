@@ -48,7 +48,7 @@ public class User {
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Tutor> tutors = new ArrayList<>();
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
     private List<UserSubject> subjects = new ArrayList<>();
 
