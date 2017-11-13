@@ -26,7 +26,7 @@ public class TutorService {
     private ElasticsearchService elasticsearchService;
 
     @Autowired
-    public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao) {
+    public TutorService(TutorDao tutorDao, UserDao userDao, CourseCatalogDao courseCatalogDao, ElasticsearchService elasticsearchService) {
         this.tutorDao = tutorDao;
         this.userDao = userDao;
         this.courseCatalogDao = courseCatalogDao;

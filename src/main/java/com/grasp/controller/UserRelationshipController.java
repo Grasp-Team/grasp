@@ -50,6 +50,4 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
 
     }
-
-
 }
