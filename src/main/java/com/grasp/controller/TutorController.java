@@ -66,7 +66,8 @@ public class TutorController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity unregisterTutor(@PathParam("id") UUID id) {
 
+        User tutor = tutorService.unregisterTutor(id);
 
-
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -3,11 +3,13 @@ package com.grasp.service;
 import com.grasp.dao.CourseCatalogDao;
 import com.grasp.dao.TutorDao;
 import com.grasp.dao.UserDao;
+import com.grasp.exception.ServiceException;
 import com.grasp.model.CourseCatalog;
 import com.grasp.model.Tutor;
 import com.grasp.model.User;
 import com.grasp.util.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,8 +86,7 @@ public class TutorService {
         User tutor = userDao.findUserById(tutorId);
 
         if(tutor == null) {
-            // TODO: add proper exception handling
-            throw new RuntimeException();
+            throw new ServiceException(HttpStatus.NOT_FOUND, "ERROR: tutor " + tutorId + "does not exist");
         }
 
         tutor.setUserType(User.UserType.STANDARD);
