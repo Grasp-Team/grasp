@@ -22,13 +22,11 @@ import java.util.UUID;
 public class UserService {
 
     private UserDao userDao;
-    private TutorService tutorService;
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDao userDao, TutorService tutorService, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserDao userDao, BCryptPasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-        this.tutorService = tutorService;
         this.passwordEncoder = passwordEncoder;
     }
 
