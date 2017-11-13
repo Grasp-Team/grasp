@@ -48,9 +48,13 @@ CREATE TABLE users.relationships (
 	UNIQUE (tutor,student)
 );
 
-CREATE TABLE course.course (
+CREATE TABLE course.subjects (
+	subject text PRIMARY KEY
+);
+
+CREATE TABLE course.user_subjects (
 	id SERIAL PRIMARY KEY,
 	uid uuid REFERENCES users.users (id),
-	course_code text REFERENCES course.course_catalog (code)
+	subject text REFERENCES course.subjects(subject)
 );
 
