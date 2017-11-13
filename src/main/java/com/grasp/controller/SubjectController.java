@@ -42,5 +42,4 @@ public class SubjectController {
         List<UserSubject> subjects = subjectService.addSubjectsForUser(entityConverter.convertToEntity(userSubjectDTO));
         return new ResponseEntity<>(entityConverter.convertToUserSubjectDTO(subjects), HttpStatus.OK);
     }
-
 }

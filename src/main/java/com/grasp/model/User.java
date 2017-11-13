@@ -1,8 +1,6 @@
 package com.grasp.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grasp.security.model.UserRole;
-import io.searchbox.annotations.JestId;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -49,8 +47,10 @@ public class User {
     private UserRole userRole = UserRole.STANDARD;
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
-    @JsonManagedReference
     private List<Tutor> tutors = new ArrayList<>();
+    @JoinColumn(name = "id")
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<UserSubject> subjects = new ArrayList<>();
 
     public User() {
     }
@@ -82,16 +82,19 @@ public class User {
         if (getYear() != user.getYear()) {
             return false;
         }
-        if (!getId().equals(user.getId())) {
+        if (getId() != null ? !getId().equals(user.getId()) : user.getId() != null) {
             return false;
         }
-        if (!getFirstName().equals(user.getFirstName())) {
+        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null) {
             return false;
         }
-        if (!getLastName().equals(user.getLastName())) {
+        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null) {
             return false;
         }
-        if (!getEmail().equals(user.getEmail())) {
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) {
+            return false;
+        }
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null) {
             return false;
         }
         if (getProgram() != null ? !getProgram().equals(user.getProgram()) : user.getProgram() != null) {
@@ -103,20 +106,29 @@ public class User {
         if (getUserType() != user.getUserType()) {
             return false;
         }
-        return getTutors() != null ? getTutors().equals(user.getTutors()) : user.getTutors() == null;
+        if (getUserRole() != user.getUserRole()) {
+            return false;
+        }
+        if (getTutors() != null ? !getTutors().equals(user.getTutors()) : user.getTutors() != null) {
+            return false;
+        }
+        return getSubjects() != null ? getSubjects().equals(user.getSubjects()) : user.getSubjects() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
-        result = 31 * result + getEmail().hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         result = 31 * result + getYear();
         result = 31 * result + (getProgram() != null ? getProgram().hashCode() : 0);
         result = 31 * result + (getFaculty() != null ? getFaculty().hashCode() : 0);
-        result = 31 * result + getUserType().hashCode();
+        result = 31 * result + (getUserType() != null ? getUserType().hashCode() : 0);
+        result = 31 * result + (getUserRole() != null ? getUserRole().hashCode() : 0);
         result = 31 * result + (getTutors() != null ? getTutors().hashCode() : 0);
+        result = 31 * result + (getSubjects() != null ? getSubjects().hashCode() : 0);
         return result;
     }
 

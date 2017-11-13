@@ -17,7 +17,7 @@ public class UserSubject {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "id")
+    @Column(name = "uid")
     private UUID userId;
     @Column(name="subject")
     private String subject;

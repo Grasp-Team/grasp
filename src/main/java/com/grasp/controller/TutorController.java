@@ -2,10 +2,10 @@ package com.grasp.controller;
 
 
 import com.grasp.model.User;
-import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.NewTutorDTO;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
+import com.grasp.model.util.EntityConverter;
 import com.grasp.service.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.UUID;
 
