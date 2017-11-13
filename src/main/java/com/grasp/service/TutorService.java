@@ -63,12 +63,17 @@ public class TutorService {
     public User registerTutor(UUID tutorId, List<String> courseCodes) {
         List<CourseCatalog> courseCatalogEntries = courseCatalogDao.findAllByCodeIn(courseCodes);
         User tutor = userDao.findUserById(tutorId);
+
+        if(tutor == null) {
+            return null;
+        }
+
         UUID id = tutor.getId();
 
         List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(id, c)).collect(
                 Collectors.toList());
 
-        if (CollectionHelper.isEmpty(tutorEntries) || tutor == null) {
+        if (CollectionHelper.isEmpty(tutorEntries)) {
             return null;
         }
 
