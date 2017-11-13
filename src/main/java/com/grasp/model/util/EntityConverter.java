@@ -4,7 +4,9 @@ import com.grasp.dao.UserDao;
 import com.grasp.model.User;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
+import com.grasp.model.dto.UserRelationshipDTO;
 import com.grasp.model.dto.UserSignUpDTO;
+import com.grasp.model.UserRelationship;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,4 +45,13 @@ public class EntityConverter {
     public UserListDTO convertToDTO(List<User> users) {
         return new UserListDTO(users.stream().map(this::convertToDTO).collect(Collectors.toList()));
     }
+
+    public UserRelationship convertToEntity(UserRelationshipDTO userRelationshipDTO) {
+        return modelMapper.map(userRelationshipDTO, UserRelationship.class);
+    }
+
+    public UserRelationshipDTO convertToDTO(UserRelationship userRelationship) {
+        return modelMapper.map(userRelationship, UserRelationshipDTO.class);
+    }
+
 }
