@@ -51,6 +51,7 @@ public class UserAuthenticationController {
         User user;
 
         try {
+            System.out.println("TOKEN: " + token);
             Claims claims = JWT.parseJwt(token);
 
             user = userService.getByEmail(claims.getSubject());
