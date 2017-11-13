@@ -27,7 +27,7 @@ public class UserController {
         this.entityConverter = entityConverter;
     }
 
-    @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
+    @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getByName(@PathVariable("email") String email) {
         User user = userService.getByEmail(email);
 

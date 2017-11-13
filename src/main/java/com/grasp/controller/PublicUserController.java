@@ -23,9 +23,8 @@ public class PublicUserController {
     }
 
 
-    @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
+    @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<InUseDTO> getByName(@PathVariable("email") String email) {
-        System.out.println("EMAIL: " + email);
         User user = userService.getByEmail(email);
 
         if (user == null) {
