@@ -1,6 +1,7 @@
 package com.grasp.service;
 
 import com.grasp.dao.UserDao;
+import com.grasp.exception.ServiceException;
 import com.grasp.model.User;
 import com.grasp.security.model.APIAuthenticationToken;
 import com.grasp.security.model.UserAuthenticationRequest;
@@ -8,6 +9,7 @@ import com.grasp.security.model.UserAuthenticationResponse;
 import com.grasp.util.CollectionHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -99,7 +101,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        if(userDao.findUserByEmail(user.getEmail()) != null) {
+        if (userDao.findUserByEmail(user.getEmail()) != null) {
             return null;
         }
 
@@ -110,9 +112,9 @@ public class UserService {
 
         User user = getByUserName(userAuthenticationRequest.getUserName());
 
-        if(user == null) {
-            System.out.println(userAuthenticationRequest.getUserName() + "does not exist");
-            throw new RuntimeException();
+        if (user == null) {
+            throw new ServiceException(HttpStatus.NOT_FOUND,
+                    "ERROR: Unable to find: " + userAuthenticationRequest.getUserName());
         }
 
         UserAuthenticationResponse response = new UserAuthenticationResponse(user.getFirstName(), user.getLastName(),
