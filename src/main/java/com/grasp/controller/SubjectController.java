@@ -2,7 +2,7 @@ package com.grasp.controller;
 
 import com.grasp.model.Subject;
 import com.grasp.model.UserSubject;
-import com.grasp.model.dto.EntityConverter;
+import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.SubjectListDTO;
 import com.grasp.model.dto.UserSubjectDTO;
 import com.grasp.service.SubjectService;
