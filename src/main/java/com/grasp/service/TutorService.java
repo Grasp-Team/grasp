@@ -78,6 +78,7 @@ public class TutorService {
 
         elasticsearchService.upsertTutor(user);
 
+
         return user;
     }
 
@@ -92,9 +93,9 @@ public class TutorService {
         tutor.setUserType(User.UserType.STANDARD);
         tutor.setTutors(new ArrayList<>());
 
-        User user = userDao.save(tutor);
-
         elasticsearchService.deleteTutor(tutorId);
+
+        User user = userDao.save(tutor);
 
         return user;
     }

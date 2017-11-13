@@ -42,7 +42,8 @@ public class ElasticsearchService {
             client.execute(new Index.Builder(user).index(index).type(TUTOR_TYPE).build());
         } catch (Exception e) {
             //TODO: add proper exception handling
-            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: Unable to build index");
+            throw new RuntimeException(e);
+//            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: Unable to build index");
         }
     }
 
