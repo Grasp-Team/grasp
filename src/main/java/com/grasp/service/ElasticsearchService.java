@@ -9,6 +9,7 @@ import com.grasp.model.util.EntityConverter;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.core.*;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -78,6 +79,10 @@ public class ElasticsearchService {
 
         MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
                 "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
+
+        multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
+        multiMatchQueryBuilder.prefixLength(3);
+        multiMatchQueryBuilder.maxExpansions(10);
 
         sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);
 
