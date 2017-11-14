@@ -79,7 +79,7 @@ public class ElasticsearchService {
                 "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
 
         multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
-        multiMatchQueryBuilder.prefixLength(3);
+        multiMatchQueryBuilder.prefixLength(1);
         multiMatchQueryBuilder.maxExpansions(10);
 
         sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);

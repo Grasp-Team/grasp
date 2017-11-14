@@ -19,8 +19,6 @@ public class CourseCatalogService {
         this.courseCatalogDao = courseCatalogDao;
     }
 
-    // TODO: error handling
-
     public List<CourseCatalog> getAllCourses() {
 
         List<CourseCatalog> courseCatalogs = (List<CourseCatalog>) courseCatalogDao.findAll();
