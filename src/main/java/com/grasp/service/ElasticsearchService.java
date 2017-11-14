@@ -74,6 +74,8 @@ public class ElasticsearchService {
     public UserListDTO searchTutors(String queryString) {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
+        System.out.println("QUERY STRING: " + queryString);
+
         MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
                 "tutors.courseCatalog.courseName",
                 "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
