@@ -77,8 +77,7 @@ public class ElasticsearchService {
         System.out.println("QUERY STRING: " + queryString);
 
         MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
-                "tutors.courseCatalog.courseName",
-                "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
+                "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
 
         sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);
 
