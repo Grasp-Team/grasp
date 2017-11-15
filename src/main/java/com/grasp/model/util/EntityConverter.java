@@ -36,11 +36,7 @@ public class EntityConverter {
     }
 
     public User convertToEntity(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-
-        user.setPassword(userDao.findUserById(user.getId()).getPassword());
-
-        return user;
+        return modelMapper.map(userDTO, User.class);
     }
 
     public UserListDTO convertToDTO(List<User> users) {
@@ -64,16 +60,10 @@ public class EntityConverter {
     }
 
     public List<UserSubject> convertToEntity(UserSubjectDTO userSubjectDTO) {
-        List<String> subjects = userSubjectDTO.getSubjects();
         UUID userId = userSubjectDTO.getUserId();
 
-        List<UserSubject> userSubjects = new ArrayList<>();
-
-        for (String subject : subjects) {
-            userSubjects.add(new UserSubject(userId, subject));
-        }
-
-        return userSubjects;
+        return userSubjectDTO.getSubjects().stream().map(s -> new UserSubject(userId, s))
+                             .collect(Collectors.toList());
     }
 
     public UserSubjectDTO convertToUserSubjectDTO(List<UserSubject> userSubjects) {

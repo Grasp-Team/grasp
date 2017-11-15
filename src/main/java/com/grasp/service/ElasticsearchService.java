@@ -76,10 +76,11 @@ public class ElasticsearchService {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
         MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
-                "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject");
+                "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject",
+                "firstName", "lastName", "program");
 
         multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
-        multiMatchQueryBuilder.prefixLength(1);
+        multiMatchQueryBuilder.prefixLength(0);
         multiMatchQueryBuilder.maxExpansions(10);
 
         sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);

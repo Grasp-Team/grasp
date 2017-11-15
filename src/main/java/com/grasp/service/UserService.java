@@ -21,11 +21,13 @@ public class UserService {
 
     private UserDao userDao;
     private BCryptPasswordEncoder passwordEncoder;
+    private ElasticsearchService elasticsearchService;
 
     @Autowired
-    public UserService(UserDao userDao, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserDao userDao, BCryptPasswordEncoder passwordEncoder, ElasticsearchService elasticsearchService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.elasticsearchService = elasticsearchService;
     }
 
     public User getByEmail(String email) {
@@ -55,8 +57,12 @@ public class UserService {
         String lastName = updatedUser.getLastName();
         String program = updatedUser.getProgram();
         String faculty = updatedUser.getFaculty();
+        String email = updatedUser.getEmail();
         int year = updatedUser.getYear();
 
+        if(email != null && getByEmail(email) == null) {
+            originalUser.setEmail(email);
+        }
         if (firstName != null) {
             originalUser.setFirstName(firstName);
         }
@@ -72,7 +78,6 @@ public class UserService {
         if (year != 0) {
             originalUser.setYear(year);
         }
-
     }
 
     /*
@@ -80,16 +85,18 @@ public class UserService {
      */
     public User updateUser(User user) {
 
-        // Check if user exists and return null otherwise
         User originalUser = getById(user.getId());
         if (originalUser == null) {
             return null;
         }
 
-        // Update applicable fields
         updateUserFields(originalUser, user);
 
-        // Save and return
+        // if user is a tutor - need to update info in es
+        if(originalUser.getUserType() == User.UserType.TUTOR) {
+            elasticsearchService.upsertTutor(originalUser);
+        }
+
         return userDao.save(originalUser);
     }
 
@@ -97,7 +104,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        if (userDao.findUserByEmail(user.getEmail()) != null) {
+        if (getByEmail(user.getEmail()) != null) {
             return null;
         }
 
