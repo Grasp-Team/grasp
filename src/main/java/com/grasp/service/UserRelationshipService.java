@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static com.grasp.model.entity.UserRelationship.*;
+
 @Service
 public class UserRelationshipService {
 
@@ -24,7 +26,7 @@ public class UserRelationshipService {
         return userRelationshipDao.save(newRelationship);
     }
 
-    public UserRelationship updateExistingRelationship(Long id, UserRelationship.Status status) {
+    public UserRelationship updateExistingRelationship(Long id, Status status) {
 
         UserRelationship existingRelationship = userRelationshipDao
                 .findUserRelationshipById(id);
@@ -44,22 +46,43 @@ public class UserRelationshipService {
         return userRelationshipDao.findUserRelationshipById(id);
     }
     
-    public List<UserRelationship> getRelationshipByTutor(UUID tutorid) {
+    public List<UserRelationship> getRelationshipByTutor(UUID tutorId, String status) {
 
-        if (tutorid == null) {
+        if (tutorId == null) {
             throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "TutorId is null.");
         }
-        
-        return userRelationshipDao.findUserRelationshipsByTutorId(tutorid);
+
+        //TODO: get a better way to convert this
+        if(status == null || status.isEmpty()) {
+            return userRelationshipDao.findUserRelationshipsByTutorId(tutorId);
+        } else if(status.equals("ACCEPTED")) {
+            return userRelationshipDao.findUserRelationshipsByTutorIdAndRelationshipStatus(tutorId, Status.ACCEPTED);
+        } else if(status.equals("PENDING")) {
+            return userRelationshipDao.findUserRelationshipsByTutorIdAndRelationshipStatus(tutorId, Status.PENDING);
+        } else if(status.equals("REJECTED")) {
+            return userRelationshipDao.findUserRelationshipsByTutorIdAndRelationshipStatus(tutorId, Status.REJECTED);
+        } else {
+            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid status: " + status + " supplied.");
+        }
     }
 
-    public List<UserRelationship> getRelationshipByUser(UUID userId) {
+    public List<UserRelationship> getRelationshipByUser(UUID userId, String status) {
 
         if (userId == null) {
             throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "UserId is null.");
         }
 
-        return userRelationshipDao.findUserRelationshipsByUserId(userId);
+        if(status == null || status.isEmpty()) {
+            return userRelationshipDao.findUserRelationshipsByUserId(userId);
+        } else if(status.equals("ACCEPTED")) {
+            return userRelationshipDao.findUserRelationshipsByUserIdAndRelationshipStatus(userId, Status.ACCEPTED);
+        } else if(status.equals("PENDING")) {
+            return userRelationshipDao.findUserRelationshipsByUserIdAndRelationshipStatus(userId, Status.PENDING);
+        } else if(status.equals("REJECTED")) {
+            return userRelationshipDao.findUserRelationshipsByUserIdAndRelationshipStatus(userId, Status.REJECTED);
+        } else {
+            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid status: " + status + " supplied.");
+        }
     }
 
 

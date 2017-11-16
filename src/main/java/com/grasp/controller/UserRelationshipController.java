@@ -57,16 +57,19 @@ public class UserRelationshipController {
     }
 
     @RequestMapping(value = "/tutor/{id}", method = RequestMethod.GET)
-    public ResponseEntity<UserRelationshipListDTO> getTutorRelationshipById(@PathVariable("id") UUID tutorId) {
+    public ResponseEntity<UserRelationshipListDTO> getTutorRelationshipById(@PathVariable("id") UUID tutorId,
+                                                                            @RequestParam(value = "status", defaultValue = "") String status) {
         return new ResponseEntity<>(
-                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByTutor(tutorId)),
+                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByTutor(tutorId, status)),
                 HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<UserRelationshipListDTO> getUserRelationshipById(@PathVariable("id") UUID userId) {
+    public ResponseEntity<UserRelationshipListDTO> getUserRelationshipById(@PathVariable("id") UUID userId,
+                                                                           @RequestParam(value = "status", defaultValue = "") String status) {
+
         return new ResponseEntity<>(
-                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByUser(userId)),
+                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByUser(userId, status)),
                 HttpStatus.OK);
     }
 }
