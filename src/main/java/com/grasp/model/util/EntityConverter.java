@@ -19,12 +19,10 @@ import java.util.stream.Collectors;
 public class EntityConverter {
 
     private ModelMapper modelMapper;
-    private UserDao userDao;
 
     @Autowired
-    public EntityConverter(ModelMapper modelMapper, UserDao userDao) {
+    public EntityConverter(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        this.userDao = userDao;
     }
 
     public User convertToEntity(UserSignUpDTO userDTO) {
@@ -64,6 +62,16 @@ public class EntityConverter {
 
         return userSubjectDTO.getSubjects().stream().map(s -> new UserSubject(userId, s))
                              .collect(Collectors.toList());
+    }
+
+    public UserRelationshipListDTO convertToUserRelationshipDTO(List<UserRelationship> userRelationships) {
+        List<UserRelationshipDTO> relationshipList = new ArrayList<>();
+
+        for (UserRelationship relationship : userRelationships) {
+            relationshipList.add(convertToDTO(relationship));
+        }
+
+        return new UserRelationshipListDTO(relationshipList);
     }
 
     public UserSubjectDTO convertToUserSubjectDTO(List<UserSubject> userSubjects) {

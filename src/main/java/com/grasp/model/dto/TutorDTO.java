@@ -9,14 +9,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class NewTutorDTO {
+public class TutorDTO {
     private UUID userId;
     private List<String> courseCodes;
 
-    public NewTutorDTO() {
+    public TutorDTO() {
     }
 
-    public NewTutorDTO(UUID userId, List<String> courseCodes) {
+    public TutorDTO(UUID userId, List<String> courseCodes) {
         this.userId = userId;
         this.courseCodes = courseCodes;
     }

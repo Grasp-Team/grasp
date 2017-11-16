@@ -1,5 +1,7 @@
 package com.grasp.controller;
 
+import com.grasp.exception.ControllerException;
+import com.grasp.model.dto.UserRelationshipListDTO;
 import com.grasp.model.entity.UserRelationship;
 import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.UserRelationshipDTO;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/relationship")
@@ -38,16 +42,28 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<UserRelationshipDTO> getRelationship(@RequestBody UserRelationshipDTO userRelationshipDTO) {
-        UserRelationship relationship = relationshipService.getRelationship(entityConverter
-                .convertToEntity(userRelationshipDTO));
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserRelationshipDTO> getRelationship(@PathVariable("id") Long id) {
+        UserRelationship relationship = relationshipService.getRelationshipById(id);
 
         if (relationship == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ControllerException(HttpStatus.NOT_FOUND, "Unable to find relationship: " + id);
         }
 
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/tutor/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserRelationshipListDTO> getTutorRelationshipById(@PathVariable("id") UUID tutorId) {
+        return new ResponseEntity<>(
+                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByTutor(tutorId)),
+                HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserRelationshipListDTO> getUserRelationshipById(@PathVariable("id") UUID userId) {
+        return new ResponseEntity<>(
+                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByUser(userId)),
+                HttpStatus.OK);
     }
 }

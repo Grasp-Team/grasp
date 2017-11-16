@@ -2,7 +2,7 @@ package com.grasp.controller;
 
 
 import com.grasp.model.entity.User;
-import com.grasp.model.dto.NewTutorDTO;
+import com.grasp.model.dto.TutorDTO;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
 import com.grasp.model.util.EntityConverter;
@@ -52,8 +52,8 @@ public class TutorController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> registerTutor(@RequestBody NewTutorDTO newTutorDTO) {
-        User newTutor = tutorService.registerTutor(newTutorDTO.getUserId(), newTutorDTO.getCourseCodes());
+    public ResponseEntity<UserDTO> registerTutor(@RequestBody TutorDTO tutorDTO) {
+        User newTutor = tutorService.registerTutor(tutorDTO.getUserId(), tutorDTO.getCourseCodes());
 
         if (newTutor == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,8 +64,8 @@ public class TutorController {
 
     @RequestMapping(value = "/course/{id}", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> updateTutorCourses(@PathVariable("id") UUID userId,
-                                                      @RequestBody NewTutorDTO newTutorDTO) {
-        User user = tutorService.updateCoursesForTutor(userId, newTutorDTO.getCourseCodes());
+                                                      @RequestBody TutorDTO tutorDTO) {
+        User user = tutorService.updateCoursesForTutor(userId, tutorDTO.getCourseCodes());
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
