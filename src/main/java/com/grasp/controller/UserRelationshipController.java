@@ -36,9 +36,12 @@ public class UserRelationshipController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<UserRelationshipDTO> updateRelationship(
-            @PathVariable("id") Long id, @RequestBody UserRelationship.Status status) {
-        UserRelationship relationship = relationshipService.updateExistingRelationship(id, status);
+    public ResponseEntity<UserRelationshipDTO> updateRelationship(@PathVariable("id") Long id,
+                                                                  @RequestBody UserRelationshipDTO status) {
+
+        UserRelationship relationship = relationshipService
+                .updateExistingRelationship(id, status.getRelationshipStatus());
+
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
