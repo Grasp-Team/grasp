@@ -34,11 +34,11 @@ public class SearchController {
             throw new ControllerException(HttpStatus.NOT_FOUND, "ERROR: Unable to find user: " + userId);
         }
 
-        return new ResponseEntity<>(elasticsearchService.searchTutorBySubject(user.getSubjects()), HttpStatus.OK);
+        return new ResponseEntity<>(elasticsearchService.searchTutorBySubject(user.getSubjects(), userId), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<UserListDTO> search(@RequestParam(value = "query", defaultValue = "") String queryString) {
-        return new ResponseEntity<>(elasticsearchService.searchTutors(queryString), HttpStatus.OK);
+    public ResponseEntity<UserListDTO> search(@RequestParam(value = "query", defaultValue = "") String queryString, @RequestParam(value = "exclude") UUID excludeId ) {
+        return new ResponseEntity<>(elasticsearchService.searchTutors(queryString, excludeId), HttpStatus.OK);
     }
 }

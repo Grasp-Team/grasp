@@ -1,9 +1,8 @@
 package com.grasp.model.util;
 
-import com.grasp.dao.UserDao;
+import com.grasp.model.dto.*;
 import com.grasp.model.entity.Subject;
 import com.grasp.model.entity.User;
-import com.grasp.model.dto.*;
 import com.grasp.model.entity.UserRelationship;
 import com.grasp.model.entity.UserSubject;
 import org.modelmapper.ModelMapper;

@@ -30,7 +30,8 @@ CREATE TABLE users.users (
 	user_type text NOT NULL CHECK(user_type = 'STANDARD' OR user_type = 'TUTOR'),
 	user_role text NOT NULL CHECK(user_role = 'STANDARD' OR user_role='ADMIN'),
 	program text,
-	faculty text
+	faculty text,
+	image_url text
 );
 
 CREATE TABLE users.tutors (

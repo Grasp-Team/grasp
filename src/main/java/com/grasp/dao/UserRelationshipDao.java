@@ -9,6 +9,8 @@ import java.util.UUID;
 public interface UserRelationshipDao extends CrudRepository<UserRelationship, Long> {
     UserRelationship findUserRelationshipById(Long id);
 
+    UserRelationship findUserRelationshipByUserIdAndTutorId(UUID userId, UUID tutorId);
+
     List<UserRelationship> findUserRelationshipsByTutorId(UUID tutorId);
 
     List<UserRelationship> findUserRelationshipsByTutorIdAndRelationshipStatus(UUID tutorId,

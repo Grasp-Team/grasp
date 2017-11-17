@@ -16,6 +16,9 @@ import java.util.UUID;
 @Table(name = "users", schema = "users")
 public class User {
 
+    public static final String IMAGE_URL_PREFIX = "https://ui-avatars.com/api/?name=";
+    public static final String IMAGE_URL_NAME_DELIMITER = "+";
+
     public enum UserType {
         STANDARD, TUTOR
     }
@@ -45,6 +48,8 @@ public class User {
     @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.STANDARD;
+    @Column(name = "image_url")
+    private String imageUrl;
     @JoinColumn(name = "uid")
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Tutor> tutors = new ArrayList<>();
@@ -109,6 +114,9 @@ public class User {
         if (getUserRole() != user.getUserRole()) {
             return false;
         }
+        if (getImageUrl() != null ? !getImageUrl().equals(user.getImageUrl()) : user.getImageUrl() != null) {
+            return false;
+        }
         if (getTutors() != null ? !getTutors().equals(user.getTutors()) : user.getTutors() != null) {
             return false;
         }
@@ -127,6 +135,7 @@ public class User {
         result = 31 * result + (getFaculty() != null ? getFaculty().hashCode() : 0);
         result = 31 * result + (getUserType() != null ? getUserType().hashCode() : 0);
         result = 31 * result + (getUserRole() != null ? getUserRole().hashCode() : 0);
+        result = 31 * result + (getImageUrl() != null ? getImageUrl().hashCode() : 0);
         result = 31 * result + (getTutors() != null ? getTutors().hashCode() : 0);
         result = 31 * result + (getSubjects() != null ? getSubjects().hashCode() : 0);
         return result;
@@ -139,11 +148,15 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", year=" + year +
                 ", program='" + program + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", userType=" + userType +
+                ", userRole=" + userRole +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", tutors=" + tutors +
+                ", subjects=" + subjects +
                 '}';
     }
 }

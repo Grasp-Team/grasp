@@ -15,16 +15,33 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
+
+
+    private static final int MINIMUM_PASSWORD_LENGTH = 5;
+    // Regex taken from : http://emailregex.com/ Conforms to RFC 5322
+    private static final Pattern EMAIL_REGEX = Pattern.compile("\t\n" +
+                                                               "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^" +
+                                                               "_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\" +
+                                                               "x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x" +
+                                                               "7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-" +
+                                                               "9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[0" +
+                                                               "1]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0" +
+                                                               "-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\" +
+                                                               "x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0" +
+                                                               "e-\\x7f])+)\\])");
 
     private UserDao userDao;
     private BCryptPasswordEncoder passwordEncoder;
     private ElasticsearchService elasticsearchService;
 
     @Autowired
-    public UserService(UserDao userDao, BCryptPasswordEncoder passwordEncoder, ElasticsearchService elasticsearchService) {
+    public UserService(UserDao userDao, BCryptPasswordEncoder passwordEncoder,
+                       ElasticsearchService elasticsearchService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.elasticsearchService = elasticsearchService;
@@ -49,9 +66,6 @@ public class UserService {
         return users;
     }
 
-    /*
-     * Updates one User object with the non-null fields of another User object
-     */
     private void updateUserFields(User originalUser, User updatedUser) {
         String firstName = updatedUser.getFirstName();
         String lastName = updatedUser.getLastName();
@@ -60,7 +74,7 @@ public class UserService {
         String email = updatedUser.getEmail();
         int year = updatedUser.getYear();
 
-        if(email != null && getByEmail(email) == null) {
+        if (email != null && getByEmail(email) == null) {
             originalUser.setEmail(email);
         }
         if (firstName != null) {
@@ -80,9 +94,41 @@ public class UserService {
         }
     }
 
-    /*
-     * Updates basic user information (i.e. name, program, faculty, etc...)
-     */
+    private void validatePassword(String password) {
+        if (password == null || password.length() < MINIMUM_PASSWORD_LENGTH) {
+            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "ERROR: Password does not conform to minimum requirements.");
+        }
+    }
+
+    private void validateEmail(String email) {
+
+        Matcher matcher = EMAIL_REGEX.matcher(email);
+
+        if (!matcher.find()) {
+            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "ERROR: Email " + email + " does not match regex");
+        }
+
+    }
+
+    private String buildImageUrl(String firstName, String lastName) {
+
+        StringBuilder sb = new StringBuilder(User.IMAGE_URL_PREFIX);
+
+        if (StringUtils.isEmpty(firstName)) {
+            sb.append(firstName);
+            sb.append(User.IMAGE_URL_NAME_DELIMITER);
+        }
+
+        if (StringUtils.isEmpty(lastName)) {
+            sb.append(lastName);
+        }
+
+        return sb.toString();
+    }
+
+
     public User updateUser(User user) {
 
         User originalUser = getById(user.getId());
@@ -92,8 +138,12 @@ public class UserService {
 
         updateUserFields(originalUser, user);
 
+        originalUser.setImageUrl(buildImageUrl(originalUser.getFirstName(), originalUser.getLastName()));
+
+        validateEmail(originalUser.getEmail());
+
         // if user is a tutor - need to update info in es
-        if(originalUser.getUserType() == User.UserType.TUTOR) {
+        if (originalUser.getUserType() == User.UserType.TUTOR) {
             elasticsearchService.upsertTutor(originalUser);
         }
 
@@ -102,7 +152,13 @@ public class UserService {
 
     public User signUp(User user) {
 
+        validatePassword(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setImageUrl(buildImageUrl(user.getFirstName(), user.getLastName()));
+
+        validateEmail(user.getEmail());
+
 
         if (getByEmail(user.getEmail()) != null) {
             return null;

@@ -45,6 +45,29 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/tutor", method = RequestMethod.POST)
+    public ResponseEntity<UserRelationshipDTO> getRelationshipForTutorAndUser(
+            @RequestBody UserRelationshipDTO userRelationshipDTO) {
+
+        UUID tutor = userRelationshipDTO.getTutorId();
+        UUID user = userRelationshipDTO.getUserId();
+
+        if (tutor == null) {
+            throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: no provided tutor.");
+        } else if (user == null) {
+            throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: no provided user.");
+        }
+
+        UserRelationship relationship = relationshipService.getRelationshipByUserAndTutor(tutor, tutor);
+
+        if (relationship == null) {
+            throw new ControllerException(HttpStatus.NOT_FOUND,
+                    "Unable to find relationship for tutor: " + tutor + " and user: " + user);
+        }
+
+        return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserRelationshipDTO> getRelationship(@PathVariable("id") Long id) {
         UserRelationship relationship = relationshipService.getRelationshipById(id);
@@ -56,11 +79,18 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteRelationshipById(@PathVariable("id") Long id) {
+        relationshipService.deleteRelationship(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/tutor/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserRelationshipListDTO> getTutorRelationshipById(@PathVariable("id") UUID tutorId,
                                                                             @RequestParam(value = "status", defaultValue = "") String status) {
         return new ResponseEntity<>(
-                entityConverter.convertToUserRelationshipDTO(relationshipService.getRelationshipByTutor(tutorId, status)),
+                entityConverter
+                        .convertToUserRelationshipDTO(relationshipService.getRelationshipByTutor(tutorId, status)),
                 HttpStatus.OK);
     }
 

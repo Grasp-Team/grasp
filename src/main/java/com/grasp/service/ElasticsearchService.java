@@ -6,6 +6,7 @@ import com.grasp.model.entity.UserSubject;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
 import com.grasp.model.util.EntityConverter;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.core.*;
@@ -58,7 +59,7 @@ public class ElasticsearchService {
         }
     }
 
-    public UserListDTO searchTutorBySubject(List<UserSubject> subjects) {
+    public UserListDTO searchTutorBySubject(List<UserSubject> subjects, UUID excludeId) {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
         BoolQueryBuilder qb = boolQuery();
@@ -67,21 +68,34 @@ public class ElasticsearchService {
             qb.should(matchQuery("tutors.courseCatalog.subject", subject.getSubject()));
         }
 
+        if(excludeId != null) {
+            qb.mustNot(matchQuery("id", excludeId));
+        }
+
+
         sourceBuilder.query(qb).size(SEARCH_LIMIT).from(0);
 
         return executeQuery(sourceBuilder);
     }
 
-    public UserListDTO searchTutors(String queryString) {
+    public UserListDTO searchTutors(String queryString, UUID excludeId) {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
         MultiMatchQueryBuilder multiMatchQueryBuilder = multiMatchQuery(queryString, "tutors.courseCatalog.description",
                 "tutors.courseCatalog.courseName", "tutors.courseCatalog.code", "tutors.courseCatalog.subject",
                 "firstName", "lastName", "program");
 
+        BoolQueryBuilder qb = boolQuery();
+
         multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
         multiMatchQueryBuilder.prefixLength(0);
         multiMatchQueryBuilder.maxExpansions(10);
+
+        qb.should(multiMatchQueryBuilder);
+
+        if (excludeId != null) {
+            qb.mustNot(matchQuery("id", excludeId));
+        }
 
         sourceBuilder.query(multiMatchQueryBuilder).size(SEARCH_LIMIT).from(0);
 
