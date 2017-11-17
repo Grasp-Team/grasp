@@ -50,10 +50,12 @@ public class UserService {
         this.elasticsearchService = elasticsearchService;
     }
 
-    public User getByEmail(String email) {
-
+    public User getByEmailValidated(String email) {
         validateEmail(email);
+        return userDao.findUserByEmail(email);
+    }
 
+    public User getByEmail(String email) {
         return userDao.findUserByEmail(email);
     }
 

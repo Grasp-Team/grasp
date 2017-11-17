@@ -25,7 +25,7 @@ public class PublicUserController {
 
     @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<InUseDTO> getByName(@PathVariable("email") String email) {
-        User user = userService.getByEmail(email);
+        User user = userService.getByEmailValidated(email);
 
         if (user == null) {
             return new ResponseEntity<>(new InUseDTO(false, "Email " + email + " not in use."), HttpStatus.OK);
