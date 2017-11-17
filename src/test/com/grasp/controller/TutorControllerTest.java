@@ -26,7 +26,7 @@ public class TutorControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        tutorController = new TutorController(tutorService, new EntityConverter(new ModelMapper(), userDao));
+        tutorController = null;//new TutorController(tutorService, new EntityConverter(new ModelMapper(), userDao));
     }
 
     @Test

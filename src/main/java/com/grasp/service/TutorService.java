@@ -73,10 +73,6 @@ public class TutorService {
         List<Tutor> tutorEntries = courseCatalogEntries.stream().map(c -> new Tutor(id, c)).collect(
                 Collectors.toList());
 
-        if (CollectionHelper.isEmpty(tutorEntries)) {
-            return null;
-        }
-
         // blank tutor entries
         tutor.setTutors(new ArrayList<>());
         tutor = userDao.save(tutor);
