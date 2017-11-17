@@ -24,16 +24,7 @@ public class UserService {
 
     private static final int MINIMUM_PASSWORD_LENGTH = 5;
     // Regex taken from : http://emailregex.com/ Conforms to RFC 5322
-    private static final Pattern EMAIL_REGEX = Pattern.compile("\t\n" +
-                                                               "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^" +
-                                                               "_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\" +
-                                                               "x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x" +
-                                                               "7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-" +
-                                                               "9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[0" +
-                                                               "1]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0" +
-                                                               "-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\" +
-                                                               "x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0" +
-                                                               "e-\\x7f])+)\\])");
+//    private static final Pattern EMAIL_REGEX = Pattern.compile();
 
     private UserDao userDao;
     private BCryptPasswordEncoder passwordEncoder;
@@ -101,16 +92,16 @@ public class UserService {
         }
     }
 
-    private void validateEmail(String email) {
-
-        Matcher matcher = EMAIL_REGEX.matcher(email);
-
-        if (!matcher.find()) {
-            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "ERROR: Email " + email + " does not match regex");
-        }
-
-    }
+//    private void validateEmail(String email) {
+//
+//        Matcher matcher = EMAIL_REGEX.matcher(email);
+//
+//        if (!matcher.find()) {
+//            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR,
+//                    "ERROR: Email " + email + " does not match regex");
+//        }
+//
+//    }
 
     private String buildImageUrl(String firstName, String lastName) {
 
@@ -140,7 +131,7 @@ public class UserService {
 
         originalUser.setImageUrl(buildImageUrl(originalUser.getFirstName(), originalUser.getLastName()));
 
-        validateEmail(originalUser.getEmail());
+//        validateEmail(originalUser.getEmail());
 
         // if user is a tutor - need to update info in es
         if (originalUser.getUserType() == User.UserType.TUTOR) {
@@ -157,7 +148,7 @@ public class UserService {
 
         user.setImageUrl(buildImageUrl(user.getFirstName(), user.getLastName()));
 
-        validateEmail(user.getEmail());
+//        validateEmail(user.getEmail());
 
 
         if (getByEmail(user.getEmail()) != null) {
