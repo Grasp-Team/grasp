@@ -51,6 +51,9 @@ public class UserService {
     }
 
     public User getByEmail(String email) {
+
+        validateEmail(email);
+
         return userDao.findUserByEmail(email);
     }
 
