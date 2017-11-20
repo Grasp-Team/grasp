@@ -96,6 +96,6 @@ public class UserController {
 
         List<UUID> userIds = userListDTO.getUsers().stream().map(UserDTO::getId).collect(Collectors.toList());
 
-        return new ResponseEntity<>(entityConverter.convertToDTO(userService.getUsersById()), HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(userService.getUsersById(userIds)), HttpStatus.OK);
     }
 }
