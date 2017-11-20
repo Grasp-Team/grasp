@@ -45,7 +45,7 @@ public class UserRelationshipController {
         return new ResponseEntity<>(entityConverter.convertToDTO(relationship), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tutor", method = RequestMethod.POST)
+    @RequestMapping(value = "/status", method = RequestMethod.POST)
     public ResponseEntity<UserRelationshipDTO> getRelationshipForTutorAndUser(
             @RequestBody UserRelationshipDTO userRelationshipDTO) {
 
