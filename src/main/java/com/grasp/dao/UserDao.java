@@ -16,4 +16,6 @@ public interface UserDao extends CrudRepository<User, UUID> {
     User findUserByEmail(String name);
 
     List<User> findAllByUserType(User.UserType userType);
+
+    List<User> findAllByIdIn(List<UUID> ids);
 }

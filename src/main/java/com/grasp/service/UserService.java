@@ -74,6 +74,21 @@ public class UserService {
         return users;
     }
 
+    public List<User> getUsersById(List<UUID> ids) {
+
+        if(CollectionHelper.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
+
+        List<User> userList = userDao.findAllByIdIn(ids);
+
+        if(CollectionHelper.isEmpty(userList)) {
+            return new ArrayList<>();
+        }
+
+        return userList;
+    }
+
     private void updateUserFields(User originalUser, User updatedUser) {
         String firstName = updatedUser.getFirstName();
         String lastName = updatedUser.getLastName();
@@ -198,4 +213,6 @@ public class UserService {
 
         return response;
     }
+
+
 }
