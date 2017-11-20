@@ -58,7 +58,7 @@ public class UserRelationshipController {
             throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR: no provided user.");
         }
 
-        UserRelationship relationship = relationshipService.getRelationshipByUserAndTutor(tutor, tutor);
+        UserRelationship relationship = relationshipService.getRelationshipByUserAndTutor(user, tutor);
 
         if (relationship == null) {
             throw new ControllerException(HttpStatus.NOT_FOUND,

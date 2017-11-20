@@ -24,7 +24,14 @@ public class UserRelationshipService {
     }
 
     public UserRelationship addNewRelationship(UserRelationship newRelationship) {
-        return userRelationshipDao.save(newRelationship);
+        UserRelationship relationship = userRelationshipDao
+                .findUserRelationshipByUserIdAndTutorId(newRelationship.getUserId(), newRelationship.getTutorId());
+
+        if(relationship == null) {
+            return userRelationshipDao.save(newRelationship);
+        } else {
+            return relationship;
+        }
     }
 
     public UserRelationship updateExistingRelationship(Long id, Status status) {
