@@ -22,6 +22,7 @@ public class UserDTO {
     private int year;
     private String program;
     private String faculty;
+    private String imageUrl;
     private User.UserType userType;
     private UserRole userRole;
     private List<Tutor> tutors;
