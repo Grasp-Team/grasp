@@ -1,19 +1,20 @@
 package com.grasp.service;
 
 import com.grasp.exception.ServiceException;
-import com.grasp.model.entity.User;
-import com.grasp.model.entity.UserSubject;
 import com.grasp.model.dto.UserDTO;
 import com.grasp.model.dto.UserListDTO;
+import com.grasp.model.entity.User;
+import com.grasp.model.entity.UserSubject;
 import com.grasp.model.util.EntityConverter;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
-import io.searchbox.core.*;
+import io.searchbox.core.Delete;
+import io.searchbox.core.Index;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
-import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 @Service
 public class ElasticsearchService {
