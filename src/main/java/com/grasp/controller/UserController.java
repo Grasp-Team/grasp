@@ -1,6 +1,7 @@
 package com.grasp.controller;
 
 import com.grasp.exception.ControllerException;
+import com.grasp.model.dto.UuidListDTO;
 import com.grasp.model.entity.User;
 import com.grasp.model.util.EntityConverter;
 import com.grasp.model.dto.UserDTO;
@@ -87,15 +88,13 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserListDTO> getAllUsersById(UserListDTO userListDTO) {
+    public ResponseEntity<UserListDTO> getAllUsersById(UuidListDTO userList) {
 
-        if (userListDTO.getUsers() == null) {
+        if (userList.getUsers() == null) {
             throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "ERROR: Must provide a list of users as body");
         }
 
-        List<UUID> userIds = userListDTO.getUsers().stream().map(UserDTO::getId).collect(Collectors.toList());
-
-        return new ResponseEntity<>(entityConverter.convertToDTO(userService.getUsersById(userIds)), HttpStatus.OK);
+        return new ResponseEntity<>(entityConverter.convertToDTO(userService.getUsersById(userList.getUsers())), HttpStatus.OK);
     }
 }
