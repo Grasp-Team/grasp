@@ -88,7 +88,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserListDTO> getAllUsersById(UuidListDTO userList) {
+    public ResponseEntity<UserListDTO> getAllUsersById(@RequestBody UuidListDTO userList) {
 
         if (userList.getUsers() == null) {
             throw new ControllerException(HttpStatus.INTERNAL_SERVER_ERROR,
